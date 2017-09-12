@@ -1,0 +1,1246 @@
+
+
+
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<base href="http://demo.tomexam.com/" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>自我检测</title>
+	<link rel="shortcut icon" href="favicon.ico" />
+	<link rel="stylesheet" type="text/css" href="skins/default/style.css" />
+    
+	<script src="inc/js/jquery.js" type="text/javascript"></script>
+	<script src="inc/js/baseutil.js" type="text/javascript"></script>
+
+	<link rel="stylesheet" href="inc/js/jquery-validation-engine/css/validationEngine.jquery.css" />
+	<script src="inc/js/jquery-validation-engine/js/jquery.validationEngine.js"></script>
+	
+	
+	<script src="inc/js/jquery-validation-engine/js/languages/jquery.validationEngine-zh_CN.js"></script>
+	
+
+	
+
+	<style>
+		.div-key-container{margin:5px 25px; border:dotted 1px #ddd; padding:5px;}
+		.div-key-container span{font-weight:bold}
+	</style>
+    
+	<script type="text/javascript">
+
+		var tm_pid = "0";
+		var tm_cost_seconds = 0;
+		var tm_maxtime = eval("10") * 60;
+		var tm_timer = null;
+
+
+		$(document).ready(function() {
+			tmUserPaper.initPaper();
+			$(".tm_paper_section h1").click(function(){
+				$(this).parent().children(".tm_paper_question").toggle();
+			});
+			tm_resetPosition();
+
+			//计时器
+			tm_timer = setInterval(function(){
+				tm_countdown();
+			}, 1000);
+
+		});
+
+		function tm_countdown(){
+			//记录消耗的时间
+			tm_cost_seconds = tm_cost_seconds + 1;
+			$("#t_timecost").val(parseInt(tm_cost_seconds/60));
+
+			//倒计时牌
+			var tm_msg;
+			if(tm_maxtime>0){
+				tm_msg = "<span class='tm_label'>"+ tm_fn_formatSeconds(tm_maxtime) + "</span>";
+				if(tm_maxtime <= 30){
+					var ss = '试卷提交中...';
+					tm_msg += "<br/><font color='red'><b>"+ss+"</b></font>";
+				}
+
+				$("#div_processor_timer").html(tm_msg);
+
+				if(tm_maxtime == 5*60) {
+					alert('注意，还有5分钟!\n时间结束后，如您没有交卷，试卷将自动提交。');   
+				}
+
+				--tm_maxtime;
+
+			}else{
+				clearInterval(tm_timer);
+				$("#div_processor_timer").html('考试时间到，试卷将自动提交!');
+				$("form").attr("action","http://demo.tomexam.com/user/selftest/submit.do");
+				$("form").submit();
+			}
+		}
+
+
+		function tm_resetPosition(){
+			var nw = $(".tm_paper_head").width() + 45;
+			$("#div_processor").css("left",nw + "px");
+		}
+
+		$(window).resize(function(){
+			tm_resetPosition();
+		});
+		 
+		$(window).scroll(function(){
+			var tp = $(window).scrollTop();
+			if(tp > 240){
+				$("#div_processor").css("top", "20px");
+			}else{
+				var ntp = 240 - tp;
+				$("#div_processor").css("top", ntp + "px");
+			}
+		});
+	
+		
+		var tmUserPaper = {
+			initPaper : function(){
+				//绑定输入提示
+				tmUserPaper.bindQuickTip();
+			},
+			
+			submitPaper : function(){
+				var wcm = window.confirm('确定要提交试卷吗？');
+				if(!wcm){
+					return;
+				}
+
+				var formcheck = $("#form_paper_detail").validationEngine('validate');
+				if(formcheck){
+					$(".tm_btn").attr("disabled","disabled");
+					$(".tm_btn").val('试卷提交中...');
+
+					window.onbeforeunload = null;
+					
+					$("#form_paper_detail").attr("action","http://demo.tomexam.com/user/selftest/submit.do");
+					$("#form_paper_detail").submit();
+
+				}else{
+					var wcm = window.confirm('试题没有全部完成，请确定是否要提交试卷？');
+					if(!wcm){
+						return;
+					}
+					
+					$(".tm_btn").attr("disabled","disabled");
+					$(".tm_btn").val('试卷提交中...');
+
+					window.onbeforeunload = null;
+					
+					$("#form_paper_detail").attr("action","http://demo.tomexam.com/user/selftest/submit.do");
+					$("#form_paper_detail").submit();
+				}
+				
+			},
+
+			moveToQuestion : function(qid){
+				var thetop = $("#quick-Q-" + qid).offset().top;
+				$("html:not(:animated),body:not(:animated)").animate({ scrollTop: thetop}, 500);
+			},
+
+			bindQuickTip : function(){
+				//选择题绑定
+				$(".qk-choice").click(function(){
+					var thename = $(this).attr("name");
+					var theqid = $(this).data("qid");
+					var chval = $('input[name='+thename+']:checked').val();
+
+					if(baseutil.isNull(chval)){
+						$("#fast_"+theqid).prop("class","");
+					}else{
+						$("#fast_"+theqid).prop("class","finished");
+					}
+				});
+				//填空题绑定
+				$(".qk-blank").keyup(function(){
+					var thename = $(this).attr("name");
+					var theqid = $(this).data("qid");
+					if(tm_checker_blanker_filled(thename)){
+						$("#fast_"+theqid).prop("class","finished");
+					}else{
+						$("#fast_"+theqid).prop("class","");
+					}
+				});
+				//问答题绑定
+				$(".qk-txt").keyup(function(){
+					var thename = $(this).attr("name");
+					var theqid = $(this).data("qid");
+					var chval = $(this).val();
+					
+					if(baseutil.isNull(chval)){
+						$("#fast_"+theqid).prop("class","");
+					}else{
+						$("#fast_"+theqid).prop("class","finished");
+					}
+				});
+			}
+		};
+
+		//填空题的输入判断
+		function tm_checker_blanker_filled(n){
+			var len = $("input[name='"+n+"']").length;
+			var mylen = 0;
+			$("input[name='"+n+"']").each(function(){
+				var chval = $(this).val();
+				if(baseutil.isNull(chval)){
+
+				}else{
+					mylen ++;
+				}
+			});
+			return len == mylen;
+		}
+
+		
+		
+	</script>
+  </head>
+  
+<body>
+
+	<div class="tm_main">
+    	
+		<div class="tm_container">
+			<ul class="tm_breadcrumb">
+				<li><a href="common/welcome.thtml">首页</a> <span class="divider">&gt;</span></li>
+				<li><a href="user/selftest/new.thtml">自我检测</a> <span class="divider">&gt;</span></li>
+				<li class="active">自我检测_2017-05-21</li>
+			</ul>
+		</div>
+        
+        <div class="tm_container">
+
+			<table border="0" width="100%" cellpadding="0" style="min-width:860px;">
+				<tr>
+					<!-- left -->
+					<td valign="top">
+						<form method="post" id="form_paper_detail">
+                    	<div class="tm_paper">
+                            <div class="tm_paper_head">
+                                <h1>自我检测_2017-05-21</h1>
+								<h2 style="background:#ddd; padding:5px 0; font-size:14px; font-weight:bold">
+									试卷信息
+								</h2>
+                                <h2>
+									<b>考试时长</b> : 10 分钟
+									&nbsp;&nbsp;
+									<b>卷面总分</b> : 36
+								</h2>
+                            </div>
+
+                            <div class="tm_paper_body">
+								
+								
+
+                            	
+                            	<div class="tm_paper_section">
+                                	<h1>单选题</h1>
+                                    <h2>单选题</h2>
+                                    
+                                    
+									
+									
+									<span class="span-quick-nav" data-qid="df4186f3-3638-4a54-8827-f8300044c74c" id="quick-Q-df4186f3-3638-4a54-8827-f8300044c74c"></span>
+
+                                    <table border="0" cellpadding="0" cellspacing="0" class="tm_paper_question" style="table-layout:fixed;">
+                                    	<thead>
+                                        	<tr>
+                                            	<th valign="top" class="tm_question_lineheight"><cite>1</cite></th>
+                                                <td class="tm_question_lineheight">
+													
+														
+														   
+															工业管道可以分为（ ）。
+														 
+													
+												</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        	<tr>
+                                            	<td colspan="2">
+                                                
+                                                    
+                                                        <ul>
+                                                        
+                                                            <li><label><input type="radio" class="validate[required] qk-choice" value="A" data-qid="df4186f3-3638-4a54-8827-f8300044c74c" name="Q-df4186f3-3638-4a54-8827-f8300044c74c" />
+																A . Ａ、GC1、GC2、GC3级　</label></li>
+                                                        
+                                                            <li><label><input type="radio" class="validate[required] qk-choice" value="B" data-qid="df4186f3-3638-4a54-8827-f8300044c74c" name="Q-df4186f3-3638-4a54-8827-f8300044c74c" />
+																B . B、Ⅰ、Ⅱ、Ⅲ级　</label></li>
+                                                        
+                                                            <li><label><input type="radio" class="validate[required] qk-choice" value="C" data-qid="df4186f3-3638-4a54-8827-f8300044c74c" name="Q-df4186f3-3638-4a54-8827-f8300044c74c" />
+																C . C、A、</label></li>
+                                                        
+                                                            <li><label><input type="radio" class="validate[required] qk-choice" value="D" data-qid="df4186f3-3638-4a54-8827-f8300044c74c" name="Q-df4186f3-3638-4a54-8827-f8300044c74c" />
+																D . B、C级</label></li>
+                                                        
+                                                        </ul>
+                                                    
+                                                    
+                                                    
+                                                
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    
+									
+									
+									<span class="span-quick-nav" data-qid="0a642ce1-2f91-403d-b6d0-8c241ba2dc92" id="quick-Q-0a642ce1-2f91-403d-b6d0-8c241ba2dc92"></span>
+
+                                    <table border="0" cellpadding="0" cellspacing="0" class="tm_paper_question" style="table-layout:fixed;">
+                                    	<thead>
+                                        	<tr>
+                                            	<th valign="top" class="tm_question_lineheight"><cite>2</cite></th>
+                                                <td class="tm_question_lineheight">
+													
+														
+														   
+															具有极度危害介质其最高允许浓度为（ ）。
+														 
+													
+												</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        	<tr>
+                                            	<td colspan="2">
+                                                
+                                                    
+                                                        <ul>
+                                                        
+                                                            <li><label><input type="radio" class="validate[required] qk-choice" value="A" data-qid="0a642ce1-2f91-403d-b6d0-8c241ba2dc92" name="Q-0a642ce1-2f91-403d-b6d0-8c241ba2dc92" />
+																A . Ａ、<0.1mg/立方米；　</label></li>
+                                                        
+                                                            <li><label><input type="radio" class="validate[required] qk-choice" value="B" data-qid="0a642ce1-2f91-403d-b6d0-8c241ba2dc92" name="Q-0a642ce1-2f91-403d-b6d0-8c241ba2dc92" />
+																B . B、0.1~<1.0mg/立方米；　</label></li>
+                                                        
+                                                            <li><label><input type="radio" class="validate[required] qk-choice" value="C" data-qid="0a642ce1-2f91-403d-b6d0-8c241ba2dc92" name="Q-0a642ce1-2f91-403d-b6d0-8c241ba2dc92" />
+																C . C、1.0~<10mg/立方米；　</label></li>
+                                                        
+                                                            <li><label><input type="radio" class="validate[required] qk-choice" value="D" data-qid="0a642ce1-2f91-403d-b6d0-8c241ba2dc92" name="Q-0a642ce1-2f91-403d-b6d0-8c241ba2dc92" />
+																D . D、≥10mg/立方米</label></li>
+                                                        
+                                                            <li><label><input type="radio" class="validate[required] qk-choice" value="E" data-qid="0a642ce1-2f91-403d-b6d0-8c241ba2dc92" name="Q-0a642ce1-2f91-403d-b6d0-8c241ba2dc92" />
+																E . 测试选项X</label></li>
+                                                        
+                                                            <li><label><input type="radio" class="validate[required] qk-choice" value="F" data-qid="0a642ce1-2f91-403d-b6d0-8c241ba2dc92" name="Q-0a642ce1-2f91-403d-b6d0-8c241ba2dc92" />
+																F . 测试选项Y</label></li>
+                                                        
+                                                            <li><label><input type="radio" class="validate[required] qk-choice" value="G" data-qid="0a642ce1-2f91-403d-b6d0-8c241ba2dc92" name="Q-0a642ce1-2f91-403d-b6d0-8c241ba2dc92" />
+																G . 测试选项Z</label></li>
+                                                        
+                                                        </ul>
+                                                    
+                                                    
+                                                    
+                                                
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    
+									
+									
+									<span class="span-quick-nav" data-qid="514cee90-abac-44c6-a75b-0efc9f31d20b" id="quick-Q-514cee90-abac-44c6-a75b-0efc9f31d20b"></span>
+
+                                    <table border="0" cellpadding="0" cellspacing="0" class="tm_paper_question" style="table-layout:fixed;">
+                                    	<thead>
+                                        	<tr>
+                                            	<th valign="top" class="tm_question_lineheight"><cite>3</cite></th>
+                                                <td class="tm_question_lineheight">
+													
+														
+														   
+															防抱死制动系统（ABS）在什么情况下可以最大限度发挥制动器效能?
+														 
+													
+												</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        	<tr>
+                                            	<td colspan="2">
+                                                
+                                                    
+                                                        <ul>
+                                                        
+                                                            <li><label><input type="radio" class="validate[required] qk-choice" value="A" data-qid="514cee90-abac-44c6-a75b-0efc9f31d20b" name="Q-514cee90-abac-44c6-a75b-0efc9f31d20b" />
+																A . 间歇制动</label></li>
+                                                        
+                                                            <li><label><input type="radio" class="validate[required] qk-choice" value="B" data-qid="514cee90-abac-44c6-a75b-0efc9f31d20b" name="Q-514cee90-abac-44c6-a75b-0efc9f31d20b" />
+																B . 持续制动</label></li>
+                                                        
+                                                            <li><label><input type="radio" class="validate[required] qk-choice" value="C" data-qid="514cee90-abac-44c6-a75b-0efc9f31d20b" name="Q-514cee90-abac-44c6-a75b-0efc9f31d20b" />
+																C . 紧急制动</label></li>
+                                                        
+                                                            <li><label><input type="radio" class="validate[required] qk-choice" value="D" data-qid="514cee90-abac-44c6-a75b-0efc9f31d20b" name="Q-514cee90-abac-44c6-a75b-0efc9f31d20b" />
+																D . 缓踏制动踏板</label></li>
+                                                        
+                                                            <li><label><input type="radio" class="validate[required] qk-choice" value="E" data-qid="514cee90-abac-44c6-a75b-0efc9f31d20b" name="Q-514cee90-abac-44c6-a75b-0efc9f31d20b" />
+																E . 测试选项X</label></li>
+                                                        
+                                                            <li><label><input type="radio" class="validate[required] qk-choice" value="F" data-qid="514cee90-abac-44c6-a75b-0efc9f31d20b" name="Q-514cee90-abac-44c6-a75b-0efc9f31d20b" />
+																F . 测试选项Y</label></li>
+                                                        
+                                                            <li><label><input type="radio" class="validate[required] qk-choice" value="G" data-qid="514cee90-abac-44c6-a75b-0efc9f31d20b" name="Q-514cee90-abac-44c6-a75b-0efc9f31d20b" />
+																G . 测试选项Z</label></li>
+                                                        
+                                                        </ul>
+                                                    
+                                                    
+                                                    
+                                                
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    
+									
+									
+									<span class="span-quick-nav" data-qid="e664c87e-77b1-4e87-9424-c094420fe4b5" id="quick-Q-e664c87e-77b1-4e87-9424-c094420fe4b5"></span>
+
+                                    <table border="0" cellpadding="0" cellspacing="0" class="tm_paper_question" style="table-layout:fixed;">
+                                    	<thead>
+                                        	<tr>
+                                            	<th valign="top" class="tm_question_lineheight"><cite>4</cite></th>
+                                                <td class="tm_question_lineheight">
+													
+														
+														   
+															《压力管道安装安全质量监督检验规则》规定，监督检验单位对（ ）负责。
+														 
+													
+												</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        	<tr>
+                                            	<td colspan="2">
+                                                
+                                                    
+                                                        <ul>
+                                                        
+                                                            <li><label><input type="radio" class="validate[required] qk-choice" value="A" data-qid="e664c87e-77b1-4e87-9424-c094420fe4b5" name="Q-e664c87e-77b1-4e87-9424-c094420fe4b5" />
+																A . Ａ、监督检验工作质量　</label></li>
+                                                        
+                                                            <li><label><input type="radio" class="validate[required] qk-choice" value="B" data-qid="e664c87e-77b1-4e87-9424-c094420fe4b5" name="Q-e664c87e-77b1-4e87-9424-c094420fe4b5" />
+																B . B、安装安全质量　</label></li>
+                                                        
+                                                            <li><label><input type="radio" class="validate[required] qk-choice" value="C" data-qid="e664c87e-77b1-4e87-9424-c094420fe4b5" name="Q-e664c87e-77b1-4e87-9424-c094420fe4b5" />
+																C . C、压力管道的安装质量</label></li>
+                                                        
+                                                        </ul>
+                                                    
+                                                    
+                                                    
+                                                
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    
+									
+									
+									<span class="span-quick-nav" data-qid="5de6545f-0304-445b-9ef0-86d93a9f9627" id="quick-Q-5de6545f-0304-445b-9ef0-86d93a9f9627"></span>
+
+                                    <table border="0" cellpadding="0" cellspacing="0" class="tm_paper_question" style="table-layout:fixed;">
+                                    	<thead>
+                                        	<tr>
+                                            	<th valign="top" class="tm_question_lineheight"><cite>5</cite></th>
+                                                <td class="tm_question_lineheight">
+													
+														
+														   
+															压力管道严禁超压运行，主要是因为（ ）。
+														 
+													
+												</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        	<tr>
+                                            	<td colspan="2">
+                                                
+                                                    
+                                                        <ul>
+                                                        
+                                                            <li><label><input type="radio" class="validate[required] qk-choice" value="A" data-qid="5de6545f-0304-445b-9ef0-86d93a9f9627" name="Q-5de6545f-0304-445b-9ef0-86d93a9f9627" />
+																A . Ａ、在规定压力下运行是安全的；　</label></li>
+                                                        
+                                                            <li><label><input type="radio" class="validate[required] qk-choice" value="B" data-qid="5de6545f-0304-445b-9ef0-86d93a9f9627" name="Q-5de6545f-0304-445b-9ef0-86d93a9f9627" />
+																B . B、超压会使流动速度加快；　</label></li>
+                                                        
+                                                            <li><label><input type="radio" class="validate[required] qk-choice" value="C" data-qid="5de6545f-0304-445b-9ef0-86d93a9f9627" name="Q-5de6545f-0304-445b-9ef0-86d93a9f9627" />
+																C . C、超压会使流动速度减慢；　</label></li>
+                                                        
+                                                            <li><label><input type="radio" class="validate[required] qk-choice" value="D" data-qid="5de6545f-0304-445b-9ef0-86d93a9f9627" name="Q-5de6545f-0304-445b-9ef0-86d93a9f9627" />
+																D . D、超压对压力管道安全影响不大。</label></li>
+                                                        
+                                                        </ul>
+                                                    
+                                                    
+                                                    
+                                                
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    
+									
+									
+									<span class="span-quick-nav" data-qid="2dcf5dda-257c-4be4-933a-1149b1350afc" id="quick-Q-2dcf5dda-257c-4be4-933a-1149b1350afc"></span>
+
+                                    <table border="0" cellpadding="0" cellspacing="0" class="tm_paper_question" style="table-layout:fixed;">
+                                    	<thead>
+                                        	<tr>
+                                            	<th valign="top" class="tm_question_lineheight"><cite>6</cite></th>
+                                                <td class="tm_question_lineheight">
+													
+														
+														   
+															驾驶的车辆正在被其他车辆超越时，若此时后方有跟随行驶的车辆，应怎样做？
+														 
+													
+												</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        	<tr>
+                                            	<td colspan="2">
+                                                
+                                                    
+                                                        <ul>
+                                                        
+                                                            <li><label><input type="radio" class="validate[required] qk-choice" value="A" data-qid="2dcf5dda-257c-4be4-933a-1149b1350afc" name="Q-2dcf5dda-257c-4be4-933a-1149b1350afc" />
+																A . 继续加速行驶</label></li>
+                                                        
+                                                            <li><label><input type="radio" class="validate[required] qk-choice" value="B" data-qid="2dcf5dda-257c-4be4-933a-1149b1350afc" name="Q-2dcf5dda-257c-4be4-933a-1149b1350afc" />
+																B . 稍向右侧行驶，保证横向安全距离</label></li>
+                                                        
+                                                            <li><label><input type="radio" class="validate[required] qk-choice" value="C" data-qid="2dcf5dda-257c-4be4-933a-1149b1350afc" name="Q-2dcf5dda-257c-4be4-933a-1149b1350afc" />
+																C . 靠道路中心行驶</label></li>
+                                                        
+                                                            <li><label><input type="radio" class="validate[required] qk-choice" value="D" data-qid="2dcf5dda-257c-4be4-933a-1149b1350afc" name="Q-2dcf5dda-257c-4be4-933a-1149b1350afc" />
+																D . 加速向右侧让路</label></li>
+                                                        
+                                                        </ul>
+                                                    
+                                                    
+                                                    
+                                                
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    
+									
+									
+									<span class="span-quick-nav" data-qid="0d97d82d-359d-43fc-9bdb-d3789cf6836a" id="quick-Q-0d97d82d-359d-43fc-9bdb-d3789cf6836a"></span>
+
+                                    <table border="0" cellpadding="0" cellspacing="0" class="tm_paper_question" style="table-layout:fixed;">
+                                    	<thead>
+                                        	<tr>
+                                            	<th valign="top" class="tm_question_lineheight"><cite>7</cite></th>
+                                                <td class="tm_question_lineheight">
+													
+														
+														   
+															压力容器的安全技术档案管理应符合以下（ ）要求。
+														 
+													
+												</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        	<tr>
+                                            	<td colspan="2">
+                                                
+                                                    
+                                                        <ul>
+                                                        
+                                                            <li><label><input type="radio" class="validate[required] qk-choice" value="A" data-qid="0d97d82d-359d-43fc-9bdb-d3789cf6836a" name="Q-0d97d82d-359d-43fc-9bdb-d3789cf6836a" />
+																A . Ａ、及时收集归档；　</label></li>
+                                                        
+                                                            <li><label><input type="radio" class="validate[required] qk-choice" value="B" data-qid="0d97d82d-359d-43fc-9bdb-d3789cf6836a" name="Q-0d97d82d-359d-43fc-9bdb-d3789cf6836a" />
+																B . B、按台或按批建立档案；　</label></li>
+                                                        
+                                                            <li><label><input type="radio" class="validate[required] qk-choice" value="C" data-qid="0d97d82d-359d-43fc-9bdb-d3789cf6836a" name="Q-0d97d82d-359d-43fc-9bdb-d3789cf6836a" />
+																C . C、安全技术档案以外另建设备运行记录；　</label></li>
+                                                        
+                                                            <li><label><input type="radio" class="validate[required] qk-choice" value="D" data-qid="0d97d82d-359d-43fc-9bdb-d3789cf6836a" name="Q-0d97d82d-359d-43fc-9bdb-d3789cf6836a" />
+																D . D、安全技术档案以外另建设备检验记录</label></li>
+                                                        
+                                                        </ul>
+                                                    
+                                                    
+                                                    
+                                                
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    
+									
+									
+									<span class="span-quick-nav" data-qid="6badb79c-a592-48b6-84ab-94a4649375b7" id="quick-Q-6badb79c-a592-48b6-84ab-94a4649375b7"></span>
+
+                                    <table border="0" cellpadding="0" cellspacing="0" class="tm_paper_question" style="table-layout:fixed;">
+                                    	<thead>
+                                        	<tr>
+                                            	<th valign="top" class="tm_question_lineheight"><cite>8</cite></th>
+                                                <td class="tm_question_lineheight">
+													
+														
+														   
+															（ ）《气瓶安全监察规定》规定未取得《气瓶充装许可证》的充装单位，不得从事气瓶充装工作。
+														 
+													
+												</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        	<tr>
+                                            	<td colspan="2">
+                                                
+                                                    
+                                                        <ul>
+                                                        
+                                                            <li><label><input type="radio" class="validate[required] qk-choice" value="A" data-qid="6badb79c-a592-48b6-84ab-94a4649375b7" name="Q-6badb79c-a592-48b6-84ab-94a4649375b7" />
+																A . Ａ、正确　</label></li>
+                                                        
+                                                            <li><label><input type="radio" class="validate[required] qk-choice" value="B" data-qid="6badb79c-a592-48b6-84ab-94a4649375b7" name="Q-6badb79c-a592-48b6-84ab-94a4649375b7" />
+																B . B、错误</label></li>
+                                                        
+                                                        </ul>
+                                                    
+                                                    
+                                                    
+                                                
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    
+									
+									
+									<span class="span-quick-nav" data-qid="27391aa0-a234-4269-83e7-edc96696b221" id="quick-Q-27391aa0-a234-4269-83e7-edc96696b221"></span>
+
+                                    <table border="0" cellpadding="0" cellspacing="0" class="tm_paper_question" style="table-layout:fixed;">
+                                    	<thead>
+                                        	<tr>
+                                            	<th valign="top" class="tm_question_lineheight"><cite>9</cite></th>
+                                                <td class="tm_question_lineheight">
+													
+														
+														   
+															锅炉设计文件鉴定工作应当在锅炉制造前进行，锅炉制造单位不得将（ ）用于制造。
+														 
+													
+												</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        	<tr>
+                                            	<td colspan="2">
+                                                
+                                                    
+                                                        <ul>
+                                                        
+                                                            <li><label><input type="radio" class="validate[required] qk-choice" value="A" data-qid="27391aa0-a234-4269-83e7-edc96696b221" name="Q-27391aa0-a234-4269-83e7-edc96696b221" />
+																A . Ａ、未经鉴定或者鉴定未通过的锅炉设计文件　</label></li>
+                                                        
+                                                            <li><label><input type="radio" class="validate[required] qk-choice" value="B" data-qid="27391aa0-a234-4269-83e7-edc96696b221" name="Q-27391aa0-a234-4269-83e7-edc96696b221" />
+																B . B、不合格设计文件　</label></li>
+                                                        
+                                                            <li><label><input type="radio" class="validate[required] qk-choice" value="C" data-qid="27391aa0-a234-4269-83e7-edc96696b221" name="Q-27391aa0-a234-4269-83e7-edc96696b221" />
+																C . C、不符合国家规定的设计文件</label></li>
+                                                        
+                                                        </ul>
+                                                    
+                                                    
+                                                    
+                                                
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    
+									
+									
+									<span class="span-quick-nav" data-qid="04eeda68-a862-46f6-b03d-b2bd905e83f7" id="quick-Q-04eeda68-a862-46f6-b03d-b2bd905e83f7"></span>
+
+                                    <table border="0" cellpadding="0" cellspacing="0" class="tm_paper_question" style="table-layout:fixed;">
+                                    	<thead>
+                                        	<tr>
+                                            	<th valign="top" class="tm_question_lineheight"><cite>10</cite></th>
+                                                <td class="tm_question_lineheight">
+													
+														
+														   
+															压力容器开工进料要经三级检查确认无误后，才能进料，不包括（）检查。
+														 
+													
+												</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        	<tr>
+                                            	<td colspan="2">
+                                                
+                                                    
+                                                        <ul>
+                                                        
+                                                            <li><label><input type="radio" class="validate[required] qk-choice" value="A" data-qid="04eeda68-a862-46f6-b03d-b2bd905e83f7" name="Q-04eeda68-a862-46f6-b03d-b2bd905e83f7" />
+																A . Ａ、厂级领导；　</label></li>
+                                                        
+                                                            <li><label><input type="radio" class="validate[required] qk-choice" value="B" data-qid="04eeda68-a862-46f6-b03d-b2bd905e83f7" name="Q-04eeda68-a862-46f6-b03d-b2bd905e83f7" />
+																B . B、车间领导；　</label></li>
+                                                        
+                                                            <li><label><input type="radio" class="validate[required] qk-choice" value="C" data-qid="04eeda68-a862-46f6-b03d-b2bd905e83f7" name="Q-04eeda68-a862-46f6-b03d-b2bd905e83f7" />
+																C . C、班组长；　</label></li>
+                                                        
+                                                            <li><label><input type="radio" class="validate[required] qk-choice" value="D" data-qid="04eeda68-a862-46f6-b03d-b2bd905e83f7" name="Q-04eeda68-a862-46f6-b03d-b2bd905e83f7" />
+																D . D、操作人员</label></li>
+                                                        
+                                                        </ul>
+                                                    
+                                                    
+                                                    
+                                                
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    
+                                    
+                                </div>
+                                
+                            	<div class="tm_paper_section">
+                                	<h1>多选题</h1>
+                                    <h2>多选题</h2>
+                                    
+                                    
+									
+									
+									<span class="span-quick-nav" data-qid="781cad49-f4dd-4007-ab72-07a40b88e362" id="quick-Q-781cad49-f4dd-4007-ab72-07a40b88e362"></span>
+
+                                    <table border="0" cellpadding="0" cellspacing="0" class="tm_paper_question" style="table-layout:fixed;">
+                                    	<thead>
+                                        	<tr>
+                                            	<th valign="top" class="tm_question_lineheight"><cite>11</cite></th>
+                                                <td class="tm_question_lineheight">
+													
+														
+														   
+															警车、消防车、救护车、工程救险车执行紧急任务时，可以使用警报器、标志灯具；在确保安全的前提下，不受（）的限制，其他车辆和行人应当让行。
+														 
+													
+												</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        	<tr>
+                                            	<td colspan="2">
+                                                
+                                                    
+                                                    
+                                                        <ul>
+                                                        
+                                                            <li><label><input type="checkbox" class="validate[required] qk-choice" value="A" data-qid="781cad49-f4dd-4007-ab72-07a40b88e362" name="Q-781cad49-f4dd-4007-ab72-07a40b88e362" />
+																A . 行驶路线</label></li>
+                                                        
+                                                            <li><label><input type="checkbox" class="validate[required] qk-choice" value="B" data-qid="781cad49-f4dd-4007-ab72-07a40b88e362" name="Q-781cad49-f4dd-4007-ab72-07a40b88e362" />
+																B . 行驶方向</label></li>
+                                                        
+                                                            <li><label><input type="checkbox" class="validate[required] qk-choice" value="C" data-qid="781cad49-f4dd-4007-ab72-07a40b88e362" name="Q-781cad49-f4dd-4007-ab72-07a40b88e362" />
+																C . 行驶速度</label></li>
+                                                        
+                                                            <li><label><input type="checkbox" class="validate[required] qk-choice" value="D" data-qid="781cad49-f4dd-4007-ab72-07a40b88e362" name="Q-781cad49-f4dd-4007-ab72-07a40b88e362" />
+																D . 信号灯</label></li>
+                                                        
+                                                        </ul>
+                                                    
+                                                    
+                                                
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    
+									
+									
+									<span class="span-quick-nav" data-qid="24ca577a-7bc5-4981-b692-c3e9c43bb171" id="quick-Q-24ca577a-7bc5-4981-b692-c3e9c43bb171"></span>
+
+                                    <table border="0" cellpadding="0" cellspacing="0" class="tm_paper_question" style="table-layout:fixed;">
+                                    	<thead>
+                                        	<tr>
+                                            	<th valign="top" class="tm_question_lineheight"><cite>12</cite></th>
+                                                <td class="tm_question_lineheight">
+													
+														
+														   
+															特种设备使用单位在安全检验合格有效期届满前（ ）向特种设备检验检测机构提出定期检验的要求。
+														 
+													
+												</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        	<tr>
+                                            	<td colspan="2">
+                                                
+                                                    
+                                                    
+                                                        <ul>
+                                                        
+                                                            <li><label><input type="checkbox" class="validate[required] qk-choice" value="A" data-qid="24ca577a-7bc5-4981-b692-c3e9c43bb171" name="Q-24ca577a-7bc5-4981-b692-c3e9c43bb171" />
+																A . Ａ、1个月　</label></li>
+                                                        
+                                                            <li><label><input type="checkbox" class="validate[required] qk-choice" value="B" data-qid="24ca577a-7bc5-4981-b692-c3e9c43bb171" name="Q-24ca577a-7bc5-4981-b692-c3e9c43bb171" />
+																B . B、15天；　</label></li>
+                                                        
+                                                            <li><label><input type="checkbox" class="validate[required] qk-choice" value="C" data-qid="24ca577a-7bc5-4981-b692-c3e9c43bb171" name="Q-24ca577a-7bc5-4981-b692-c3e9c43bb171" />
+																C . C、一个星期　</label></li>
+                                                        
+                                                            <li><label><input type="checkbox" class="validate[required] qk-choice" value="D" data-qid="24ca577a-7bc5-4981-b692-c3e9c43bb171" name="Q-24ca577a-7bc5-4981-b692-c3e9c43bb171" />
+																D . D、三个月</label></li>
+                                                        
+                                                        </ul>
+                                                    
+                                                    
+                                                
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    
+									
+									
+									<span class="span-quick-nav" data-qid="50557b98-1e23-41ff-8457-795b5b03ec91" id="quick-Q-50557b98-1e23-41ff-8457-795b5b03ec91"></span>
+
+                                    <table border="0" cellpadding="0" cellspacing="0" class="tm_paper_question" style="table-layout:fixed;">
+                                    	<thead>
+                                        	<tr>
+                                            	<th valign="top" class="tm_question_lineheight"><cite>13</cite></th>
+                                                <td class="tm_question_lineheight">
+													
+														
+														   
+															对道路交通安全违法行为的处罚种类包括：
+														 
+													
+												</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        	<tr>
+                                            	<td colspan="2">
+                                                
+                                                    
+                                                    
+                                                        <ul>
+                                                        
+                                                            <li><label><input type="checkbox" class="validate[required] qk-choice" value="A" data-qid="50557b98-1e23-41ff-8457-795b5b03ec91" name="Q-50557b98-1e23-41ff-8457-795b5b03ec91" />
+																A . 警告</label></li>
+                                                        
+                                                            <li><label><input type="checkbox" class="validate[required] qk-choice" value="B" data-qid="50557b98-1e23-41ff-8457-795b5b03ec91" name="Q-50557b98-1e23-41ff-8457-795b5b03ec91" />
+																B . 罚款</label></li>
+                                                        
+                                                            <li><label><input type="checkbox" class="validate[required] qk-choice" value="C" data-qid="50557b98-1e23-41ff-8457-795b5b03ec91" name="Q-50557b98-1e23-41ff-8457-795b5b03ec91" />
+																C . 暂扣或者吊销机动车驾驶证</label></li>
+                                                        
+                                                            <li><label><input type="checkbox" class="validate[required] qk-choice" value="D" data-qid="50557b98-1e23-41ff-8457-795b5b03ec91" name="Q-50557b98-1e23-41ff-8457-795b5b03ec91" />
+																D . 拘留</label></li>
+                                                        
+                                                        </ul>
+                                                    
+                                                    
+                                                
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    
+									
+									
+									<span class="span-quick-nav" data-qid="b202c067-4de8-42ee-80f6-4bb8c08873af" id="quick-Q-b202c067-4de8-42ee-80f6-4bb8c08873af"></span>
+
+                                    <table border="0" cellpadding="0" cellspacing="0" class="tm_paper_question" style="table-layout:fixed;">
+                                    	<thead>
+                                        	<tr>
+                                            	<th valign="top" class="tm_question_lineheight"><cite>14</cite></th>
+                                                <td class="tm_question_lineheight">
+													
+														
+														   
+															在用特种设备的日常维护保养、定期检查，至少每（ ）进行一次。
+														 
+													
+												</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        	<tr>
+                                            	<td colspan="2">
+                                                
+                                                    
+                                                    
+                                                        <ul>
+                                                        
+                                                            <li><label><input type="checkbox" class="validate[required] qk-choice" value="A" data-qid="b202c067-4de8-42ee-80f6-4bb8c08873af" name="Q-b202c067-4de8-42ee-80f6-4bb8c08873af" />
+																A . Ａ、1个月；　</label></li>
+                                                        
+                                                            <li><label><input type="checkbox" class="validate[required] qk-choice" value="B" data-qid="b202c067-4de8-42ee-80f6-4bb8c08873af" name="Q-b202c067-4de8-42ee-80f6-4bb8c08873af" />
+																B . B、15天；　</label></li>
+                                                        
+                                                            <li><label><input type="checkbox" class="validate[required] qk-choice" value="C" data-qid="b202c067-4de8-42ee-80f6-4bb8c08873af" name="Q-b202c067-4de8-42ee-80f6-4bb8c08873af" />
+																C . C、一个星期；　</label></li>
+                                                        
+                                                            <li><label><input type="checkbox" class="validate[required] qk-choice" value="D" data-qid="b202c067-4de8-42ee-80f6-4bb8c08873af" name="Q-b202c067-4de8-42ee-80f6-4bb8c08873af" />
+																D . D、三个月</label></li>
+                                                        
+                                                        </ul>
+                                                    
+                                                    
+                                                
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    
+									
+									
+									<span class="span-quick-nav" data-qid="62f978b4-e1b2-45f2-b558-77a914da6ef4" id="quick-Q-62f978b4-e1b2-45f2-b558-77a914da6ef4"></span>
+
+                                    <table border="0" cellpadding="0" cellspacing="0" class="tm_paper_question" style="table-layout:fixed;">
+                                    	<thead>
+                                        	<tr>
+                                            	<th valign="top" class="tm_question_lineheight"><cite>15</cite></th>
+                                                <td class="tm_question_lineheight">
+													
+														
+														   
+															乘坐机动车应当遵守下列规定：
+														 
+													
+												</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        	<tr>
+                                            	<td colspan="2">
+                                                
+                                                    
+                                                    
+                                                        <ul>
+                                                        
+                                                            <li><label><input type="checkbox" class="validate[required] qk-choice" value="A" data-qid="62f978b4-e1b2-45f2-b558-77a914da6ef4" name="Q-62f978b4-e1b2-45f2-b558-77a914da6ef4" />
+																A . 乘坐两轮摩托车可以侧向骑坐</label></li>
+                                                        
+                                                            <li><label><input type="checkbox" class="validate[required] qk-choice" value="B" data-qid="62f978b4-e1b2-45f2-b558-77a914da6ef4" name="Q-62f978b4-e1b2-45f2-b558-77a914da6ef4" />
+																B . 不得在机动车道上拦乘机动车</label></li>
+                                                        
+                                                            <li><label><input type="checkbox" class="validate[required] qk-choice" value="C" data-qid="62f978b4-e1b2-45f2-b558-77a914da6ef4" name="Q-62f978b4-e1b2-45f2-b558-77a914da6ef4" />
+																C . 在机动车道上不得从机动车左侧上下车</label></li>
+                                                        
+                                                            <li><label><input type="checkbox" class="validate[required] qk-choice" value="D" data-qid="62f978b4-e1b2-45f2-b558-77a914da6ef4" name="Q-62f978b4-e1b2-45f2-b558-77a914da6ef4" />
+																D . 开关车门不得妨碍其他车辆和行人通行</label></li>
+                                                        
+                                                        </ul>
+                                                    
+                                                    
+                                                
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    
+									
+									
+									<span class="span-quick-nav" data-qid="e7f8344b-2321-4703-ab1a-e032d691905c" id="quick-Q-e7f8344b-2321-4703-ab1a-e032d691905c"></span>
+
+                                    <table border="0" cellpadding="0" cellspacing="0" class="tm_paper_question" style="table-layout:fixed;">
+                                    	<thead>
+                                        	<tr>
+                                            	<th valign="top" class="tm_question_lineheight"><cite>16</cite></th>
+                                                <td class="tm_question_lineheight">
+													
+														
+														   
+															使用单位应当于压力容器定期检验有效期届满前（ ）个月向特种设备检验机构提出定期检验要求。
+														 
+													
+												</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        	<tr>
+                                            	<td colspan="2">
+                                                
+                                                    
+                                                    
+                                                        <ul>
+                                                        
+                                                            <li><label><input type="checkbox" class="validate[required] qk-choice" value="A" data-qid="e7f8344b-2321-4703-ab1a-e032d691905c" name="Q-e7f8344b-2321-4703-ab1a-e032d691905c" />
+																A . Ａ、1　</label></li>
+                                                        
+                                                            <li><label><input type="checkbox" class="validate[required] qk-choice" value="B" data-qid="e7f8344b-2321-4703-ab1a-e032d691905c" name="Q-e7f8344b-2321-4703-ab1a-e032d691905c" />
+																B . B、3　</label></li>
+                                                        
+                                                            <li><label><input type="checkbox" class="validate[required] qk-choice" value="C" data-qid="e7f8344b-2321-4703-ab1a-e032d691905c" name="Q-e7f8344b-2321-4703-ab1a-e032d691905c" />
+																C . C、6</label></li>
+                                                        
+                                                        </ul>
+                                                    
+                                                    
+                                                
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    
+									
+									
+									<span class="span-quick-nav" data-qid="3a54e0af-14ff-46cc-b213-26fb51483178" id="quick-Q-3a54e0af-14ff-46cc-b213-26fb51483178"></span>
+
+                                    <table border="0" cellpadding="0" cellspacing="0" class="tm_paper_question" style="table-layout:fixed;">
+                                    	<thead>
+                                        	<tr>
+                                            	<th valign="top" class="tm_question_lineheight"><cite>17</cite></th>
+                                                <td class="tm_question_lineheight">
+													
+														
+														   
+															额定蒸发量≤2t/h的锅炉每台每班持证的司炉工人最少一般不少于（ ）人。
+														 
+													
+												</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        	<tr>
+                                            	<td colspan="2">
+                                                
+                                                    
+                                                    
+                                                        <ul>
+                                                        
+                                                            <li><label><input type="checkbox" class="validate[required] qk-choice" value="A" data-qid="3a54e0af-14ff-46cc-b213-26fb51483178" name="Q-3a54e0af-14ff-46cc-b213-26fb51483178" />
+																A . Ａ、1；　</label></li>
+                                                        
+                                                            <li><label><input type="checkbox" class="validate[required] qk-choice" value="B" data-qid="3a54e0af-14ff-46cc-b213-26fb51483178" name="Q-3a54e0af-14ff-46cc-b213-26fb51483178" />
+																B . B、2；　</label></li>
+                                                        
+                                                            <li><label><input type="checkbox" class="validate[required] qk-choice" value="C" data-qid="3a54e0af-14ff-46cc-b213-26fb51483178" name="Q-3a54e0af-14ff-46cc-b213-26fb51483178" />
+																C . C、3；　</label></li>
+                                                        
+                                                            <li><label><input type="checkbox" class="validate[required] qk-choice" value="D" data-qid="3a54e0af-14ff-46cc-b213-26fb51483178" name="Q-3a54e0af-14ff-46cc-b213-26fb51483178" />
+																D . D、4。</label></li>
+                                                        
+                                                        </ul>
+                                                    
+                                                    
+                                                
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    
+									
+									
+									<span class="span-quick-nav" data-qid="6c268b71-35f4-43a5-9a47-98df77f947ab" id="quick-Q-6c268b71-35f4-43a5-9a47-98df77f947ab"></span>
+
+                                    <table border="0" cellpadding="0" cellspacing="0" class="tm_paper_question" style="table-layout:fixed;">
+                                    	<thead>
+                                        	<tr>
+                                            	<th valign="top" class="tm_question_lineheight"><cite>18</cite></th>
+                                                <td class="tm_question_lineheight">
+													
+														
+														   
+															交通信号灯由（）组成。
+														 
+													
+												</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        	<tr>
+                                            	<td colspan="2">
+                                                
+                                                    
+                                                    
+                                                        <ul>
+                                                        
+                                                            <li><label><input type="checkbox" class="validate[required] qk-choice" value="A" data-qid="6c268b71-35f4-43a5-9a47-98df77f947ab" name="Q-6c268b71-35f4-43a5-9a47-98df77f947ab" />
+																A . 红灯</label></li>
+                                                        
+                                                            <li><label><input type="checkbox" class="validate[required] qk-choice" value="B" data-qid="6c268b71-35f4-43a5-9a47-98df77f947ab" name="Q-6c268b71-35f4-43a5-9a47-98df77f947ab" />
+																B . 绿灯</label></li>
+                                                        
+                                                            <li><label><input type="checkbox" class="validate[required] qk-choice" value="C" data-qid="6c268b71-35f4-43a5-9a47-98df77f947ab" name="Q-6c268b71-35f4-43a5-9a47-98df77f947ab" />
+																C . 黄灯</label></li>
+                                                        
+                                                            <li><label><input type="checkbox" class="validate[required] qk-choice" value="D" data-qid="6c268b71-35f4-43a5-9a47-98df77f947ab" name="Q-6c268b71-35f4-43a5-9a47-98df77f947ab" />
+																D . 蓝灯</label></li>
+                                                        
+                                                        </ul>
+                                                    
+                                                    
+                                                
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    
+                                    
+                                </div>
+                                
+                            	<div class="tm_paper_section">
+                                	<h1>判断题</h1>
+                                    <h2>判断题</h2>
+                                    
+                                    
+                                    
+                                </div>
+                                
+                                
+                            </div>
+                            <!-- /tm_paper_body -->
+                            
+                            <div class="tm_adm_paper_foot">
+								<button class="tm_btn tm_btn_primary" type="button"  onclick="tmUserPaper.submitPaper();">提交</button>
+                            </div>
+
+
+                        </div>
+
+						<input type="hidden" id="t_timecost" name="t_timecost" value="0" />
+						<input type="hidden" id="t_duration" name="t_duration" value="10" />
+						
+						</form>
+
+					</td><!-- /left -->
+
+					<td width="10">&nbsp;</td>
+
+					<!--  right-->
+					<td width="220" valign="top">
+						
+					</td>
+					<!--  /right-->
+				</tr>
+			</table>
+
+        	
+			
+        </div>
+        
+        
+    </div>
+
+
+	<div id="div_processor">
+		<div id="div_processor_timer" style="margin-top:5px;"></div>
+		<div id="div_processor_fastto">
+			
+	        
+			<dl>
+				<dt>单选题</dt>
+				<dd>
+					
+					
+						<a href="javascript:void(0);" onclick="tmUserPaper.moveToQuestion('df4186f3-3638-4a54-8827-f8300044c74c')" id="fast_df4186f3-3638-4a54-8827-f8300044c74c">1</a>
+					
+					
+						<a href="javascript:void(0);" onclick="tmUserPaper.moveToQuestion('0a642ce1-2f91-403d-b6d0-8c241ba2dc92')" id="fast_0a642ce1-2f91-403d-b6d0-8c241ba2dc92">2</a>
+					
+					
+						<a href="javascript:void(0);" onclick="tmUserPaper.moveToQuestion('514cee90-abac-44c6-a75b-0efc9f31d20b')" id="fast_514cee90-abac-44c6-a75b-0efc9f31d20b">3</a>
+					
+					
+						<a href="javascript:void(0);" onclick="tmUserPaper.moveToQuestion('e664c87e-77b1-4e87-9424-c094420fe4b5')" id="fast_e664c87e-77b1-4e87-9424-c094420fe4b5">4</a>
+					
+					
+						<a href="javascript:void(0);" onclick="tmUserPaper.moveToQuestion('5de6545f-0304-445b-9ef0-86d93a9f9627')" id="fast_5de6545f-0304-445b-9ef0-86d93a9f9627">5</a>
+					
+					
+						<a href="javascript:void(0);" onclick="tmUserPaper.moveToQuestion('2dcf5dda-257c-4be4-933a-1149b1350afc')" id="fast_2dcf5dda-257c-4be4-933a-1149b1350afc">6</a>
+					
+					
+						<a href="javascript:void(0);" onclick="tmUserPaper.moveToQuestion('0d97d82d-359d-43fc-9bdb-d3789cf6836a')" id="fast_0d97d82d-359d-43fc-9bdb-d3789cf6836a">7</a>
+					
+					
+						<a href="javascript:void(0);" onclick="tmUserPaper.moveToQuestion('6badb79c-a592-48b6-84ab-94a4649375b7')" id="fast_6badb79c-a592-48b6-84ab-94a4649375b7">8</a>
+					
+					
+						<a href="javascript:void(0);" onclick="tmUserPaper.moveToQuestion('27391aa0-a234-4269-83e7-edc96696b221')" id="fast_27391aa0-a234-4269-83e7-edc96696b221">9</a>
+					
+					
+						<a href="javascript:void(0);" onclick="tmUserPaper.moveToQuestion('04eeda68-a862-46f6-b03d-b2bd905e83f7')" id="fast_04eeda68-a862-46f6-b03d-b2bd905e83f7">10</a>
+					
+					<div class="tm_clear"></div>
+				</dd>
+			</dl>
+			
+			<dl>
+				<dt>多选题</dt>
+				<dd>
+					
+					
+						<a href="javascript:void(0);" onclick="tmUserPaper.moveToQuestion('781cad49-f4dd-4007-ab72-07a40b88e362')" id="fast_781cad49-f4dd-4007-ab72-07a40b88e362">11</a>
+					
+					
+						<a href="javascript:void(0);" onclick="tmUserPaper.moveToQuestion('24ca577a-7bc5-4981-b692-c3e9c43bb171')" id="fast_24ca577a-7bc5-4981-b692-c3e9c43bb171">12</a>
+					
+					
+						<a href="javascript:void(0);" onclick="tmUserPaper.moveToQuestion('50557b98-1e23-41ff-8457-795b5b03ec91')" id="fast_50557b98-1e23-41ff-8457-795b5b03ec91">13</a>
+					
+					
+						<a href="javascript:void(0);" onclick="tmUserPaper.moveToQuestion('b202c067-4de8-42ee-80f6-4bb8c08873af')" id="fast_b202c067-4de8-42ee-80f6-4bb8c08873af">14</a>
+					
+					
+						<a href="javascript:void(0);" onclick="tmUserPaper.moveToQuestion('62f978b4-e1b2-45f2-b558-77a914da6ef4')" id="fast_62f978b4-e1b2-45f2-b558-77a914da6ef4">15</a>
+					
+					
+						<a href="javascript:void(0);" onclick="tmUserPaper.moveToQuestion('e7f8344b-2321-4703-ab1a-e032d691905c')" id="fast_e7f8344b-2321-4703-ab1a-e032d691905c">16</a>
+					
+					
+						<a href="javascript:void(0);" onclick="tmUserPaper.moveToQuestion('3a54e0af-14ff-46cc-b213-26fb51483178')" id="fast_3a54e0af-14ff-46cc-b213-26fb51483178">17</a>
+					
+					
+						<a href="javascript:void(0);" onclick="tmUserPaper.moveToQuestion('6c268b71-35f4-43a5-9a47-98df77f947ab')" id="fast_6c268b71-35f4-43a5-9a47-98df77f947ab">18</a>
+					
+					<div class="tm_clear"></div>
+				</dd>
+			</dl>
+			
+			<dl>
+				<dt>判断题</dt>
+				<dd>
+					
+					<div class="tm_clear"></div>
+				</dd>
+			</dl>
+			
+		</div>
+		<div id="div_processor_ops">
+			<button class="tm_btn tm_btn_primary" type="button" onclick="tmUserPaper.submitPaper();">提交</button>
+		</div>
+	</div>
+
+
+
+</body>
+</html>

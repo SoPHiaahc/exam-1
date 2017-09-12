@@ -1,0 +1,92 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>你对小学语文了解多少？</title>
+    <link rel="stylesheet" href="styles.css" type="text/css">
+    <script src="submit.js" type="text/javascript"></script>
+</head>
+<body>
+
+
+
+
+<div>
+    <div id="header">
+        <a class="header_logo" href="/"> 调查问卷</a>
+    </div>
+</div>
+
+<div class="content">
+    <h2>测一测你对数学了解多少吧！</h2>
+    <input name="s" type="button" value="开始答题" onclick="startclock()">
+    <input name="s" type="button" value="暂停答题" onclick="pauseclock()">
+    <input name="showtime" style="color: #ff0000; width:200px;" id="showtime" type="text" value="0时0分0秒">
+
+   
+
+
+
+    <div class="votechoice">
+        <ul class="vote1">
+            <p>1.1+1=  :</p>
+            <li><input type="radio" name="a1" id="a1" value="A.2" /><span class="votechoicename"> A.2 </span></li>
+            <li><input type="radio" name="b1" id="b1" value="B.3" /><span class="votechoicename"> B.3 </span></li>
+            <li><input type="radio" name="c1" id="c1" value="C.4 " /><span class="votechoicename"> C.4 </span></li>
+            <li><input type="radio" name="d1" id="d1" value="D.5" /><span class="votechoicename"> D.5 </span></li>
+        </ul>
+    </div>
+
+    <div class="votechoice">
+        <ul class="vote1">
+            <p>2.5*5=  :</p>
+            <li><input type="radio" name="a2" id="a2" value="A.12" /><span class="votechoice"> A.12 </span></li>
+            <li><input type="radio" name="b2" id="b2" value="B.10"/><span class="votechoice"> B.10 </span></li>
+            <li><input type="radio" name="c2" id="c2" value="C.25"/><span class="votechoice"> C.25 </span></li>
+            <li><input type="radio" name="d2" id="d2" value="D.24" /><span class="votechoice"> D.24 </span></li>
+        </ul>
+    </div>
+
+    <div class="votechoice">
+        <ul class="vote1">
+            <p>3.5*4+27*5=  :</p>
+            <li><input type="radio" name="a3" id="a3" value="A.155"/><span class="votechoice"> A.155 </span></li>
+            <li><input type="radio" name="b3" id="b3" value="B.145"/><span class="votechoice"> B.145 </span></li>
+            <li><input type="radio" name="c3" id="c3" value="C.165"/><span class="votechoice"> C.165 </span></li>
+            <li><input type="radio" name="d3" id="d3" value="D.175"/><span class="votechoice"> D.175 </span></li>
+        </ul>
+    </div>
+
+    <div class="votechoice">
+        <ul class="vote1">
+            <p>4.99*123+101*23=:</p>
+            <li><input type="radio" name="a4" id="a4" value="A.14500"/><span class="votechoice"> A.14500 </span></li>
+            <li><input type="radio" name="b4" id="b4" value="B.1450"/><span class="votechoice"> B.1450 </span></li>
+            <li><input type="radio" name="c4" id="c4" value="C.14600"/><span class="votechoice"> C.14600 </span></li>
+            <li><input type="radio" name="d4" id="d4" value="D.14400"/><span class="votechoice"> D.14700 </span></li>
+        </ul>
+    </div>
+
+    <div class="votechoice">
+        <ul class="vote1">
+            <p>5. 85*56*62*69/23=  :</p>
+            <li><input type="radio" name="a5" id="a5" value="A.885360"/><span class="votechoice"> A.885360 </span></li>
+            <li><input type="radio" name="b5" id="b5" value="B.886350"/><span class="votechoice"> B.886350 </span></li>
+            <li><input type="radio" name="c5" id="c5" value="C.8856300"/><span class="votechoice"> C.8856300  </span></li>
+            <li><input type="radio" name="d5" id="d5" value="D.88565"/><span class="votechoice"> D.88565 </span></li>
+        </ul>
+    </div>
+
+
+    <input name="s" type="button"  id="abutton" value="提交问卷" >
+    <p id="results"></p>
+</div>
+
+
+</body>
+
+</html>
+

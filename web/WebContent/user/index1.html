@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>你对羽毛球了解多少？</title>
+    <link rel="stylesheet" href="styles.css" type="text/css">
+    <script src="submit.js" type="text/javascript"></script>
+</head>
+<body>
+
+
+
+
+ <div>
+       <div id="header">
+           <a class="header_logo" href="/"> 调查问卷</a>
+       </div>
+ </div>
+
+  <div class="content">
+      <h2>测一测你对羽毛球了解多少吧！</h2>
+     <!--  <input name="s" type="button" value="开始答题" onclick="startclock()">
+      <input name="s" type="button" value="暂停答题" onclick="pauseclock()">
+      <input name="showtime" style="color: #ff0000; width:200px;" id="showtime" type="text" value="0时0分0秒">
+ 
+       <p>
+           <label class="votechoice" >你叫什么名字？</label>
+           <input class="votechoicename" id="name" name="q1" type="text" placeholder="张三" required/>
+       </p>
+      <p>
+          <label class="votechoice" data-info="将成绩发送到您的邮箱">您的邮箱是？</label>
+          <input class="votechoicename" id="mail" name="q2" type="email" placeholder="15sanzhang@stu.edu.cn" required/>
+      </p>
+ --> -->
+
+
+
+      <div class="votechoice">
+          <ul class="vote1">
+          <p>1.羽毛球比赛打到20平后，连续得(  )分的一方胜该局:</p>
+          <li><input type="radio" name="a1" id="a1" value="A.2" /><span class="votechoicename"> A.2 </span></li>
+          <li><input type="radio" name="a1" id="b1" value="B.3" /><span class="votechoicename"> B.3 </span></li>
+          <li><input type="radio" name="a1" id="c1" value="C.4 " /><span class="votechoicename"> C.4 </span></li>
+          <li><input type="radio" name="a1" id="d1" value="D.5" /><span class="votechoicename"> D.5 </span></li>
+          </ul>
+      </div>
+
+      <div class="votechoice">
+          <ul class="vote1">
+          <p>2.单打比赛时，对发球不起限制作用的线是(  ):</p>
+          <li><input type="radio" name="a2" id="a2" value="A.前发球线" /><span class="votechoice"> A.前发球线 </span></li>
+          <li><input type="radio" name="a2" id="b2" value="B.双打边线"/><span class="votechoice"> B.双打边线 </span></li>
+          <li><input type="radio" name="a2" id="c2" value="C.双打的底线"/><span class="votechoice"> C.双打的底线 </span></li>
+          <li><input type="radio" name="a2" id="d2" value="D.中线" /><span class="votechoice"> D.中线 </span></li>
+          </ul>
+      </div>
+
+      <div class="votechoice">
+          <ul class="vote1">
+              <p>3.现代羽毛球运动诞生于（ ）:</p>
+              <li><input type="radio" name="a3" id="a3" value="A.印度"/><span class="votechoice"> A.印度 </span></li>
+              <li><input type="radio" name="a3" id="b3" value="B.英国"/><span class="votechoice"> B.英国 </span></li>
+              <li><input type="radio" name="a3" id="c3" value="C.中国"/><span class="votechoice"> C.中国 </span></li>
+              <li><input type="radio" name="a3" id="d3" value="D.美国"/><span class="votechoice"> D.美国 </span></li>
+          </ul>
+      </div>
+
+      <div class="votechoice">
+          <ul class="vote1">
+              <p>4.下列哪种属于网前的进攻技术(     ) :</p>
+              <li><input type="radio" name="a4" id="a4" value="A.挑高球"/><span class="votechoice"> A.挑高球 </span></li>
+              <li><input type="radio" name="a4" id="b4" value="B.推球"/><span class="votechoice"> B.推球 </span></li>
+              <li><input type="radio" name="a4" id="c4" value="C.放小球"/><span class="votechoice"> C.放小球 </span></li>
+              <li><input type="radio" name="a4" id="d4" value="D.以上都是"/><span class="votechoice"> D.以上都是 </span></li>
+          </ul>
+      </div>
+
+      <div class="votechoice">
+          <ul class="vote1">
+              <p>5.下列哪种动作不能在低手位置接球时完成（    ）:</p>
+              <li><input type="radio" name="a5" id="a5" value="A.高远球"/><span class="votechoice"> A.高远球 </span></li>
+              <li><input type="radio" name="a5" id="b5" value="B.吊球"/><span class="votechoice"> B.吊球 </span></li>
+              <li><input type="radio" name="a5" id="c5" value="C.平抽球"/><span class="votechoice"> C.平抽球  </span></li>
+              <li><input type="radio" name="a5" id="d5" value="D.轻挡网前球"/><span class="votechoice"> D.轻挡网前球 </span></li>
+          </ul>
+      </div>
+
+      <div class="votechoice">
+          <ul class="vote1">
+              <p>6.正手发高远球时，下列描述正确的是（    ）:</p>
+              <li><input type="radio" name="a6" id="a6" value="A.先挥拍，后放球"/><span class="votechoice"> A.先挥拍，后放球 </span></li>
+              <li><input type="radio" name="a6" id="b6" value="B.先放球，后挥拍"/><span class="votechoice"> B.先放球，后挥拍 </span></li>
+              <li><input type="radio" name="a6" id="c6" value="C.放球、挥拍同时进行"/><span class="votechoice"> C.放球、挥拍同时进行  </span></li>
+              <li><input type="radio" name="a6" id="d6" value="D.以上都可以"/><span class="votechoice"> D.以上都可以 </span></li>
+          </ul>
+      </div>
+
+      <div class="votechoice">
+          <ul class="vote1">
+              <p>7.在羽毛球比赛中下列哪知情况成死球（    ）:</p>
+              <li><input type="checkbox" name="a7" id="a7" value="A.球撞网并挂在网上或听在网顶"/><span class="votechoice"> A.球撞网并挂在网上或听在网顶 </span></li>
+              <li><input type="checkbox" name="a7" id="b7" value="B.球撞网后并从网上飞向对方"/><span class="votechoice"> B.球撞网后并从网上飞向对方 </span></li>
+              <li><input type="checkbox" name="a7" id="c7" value="C.球触及地面"/><span class="votechoice"> C.球触及地面  </span></li>
+              <li><input type="checkbox" name="a7" id="d7" value="D.球擦过运动员衣服，并出界"/><span class="votechoice"> D.球擦过运动员衣服，并出界</span></li>
+          </ul>
+      </div>
+
+      <div class="votechoice">
+          <ul class="vote1">
+              <p>8.下列哪个属于羽毛球发球违例（    ）:</p>
+              <li><input type="checkbox" name="a8" id="a8" value="A.过手 "/><span class="votechoice"> A.过手 </span></li>
+              <li><input type="checkbox" name="a8" id="b8" value="B.过腰"/><span class="votechoice"> B.过腰 </span></li>
+              <li><input type="checkbox" name="a8" id="c8" value="C.触网"/><span class="votechoice"> C.触网  </span></li>
+              <li><input type="checkbox" name="a8" id="d8" value="D.踩线"/><span class="votechoice"> D.踩线</span></li>
+          </ul>
+      </div>
+
+      <div class="votechoice">
+          <ul class="vote1">
+              <p>9.下例哪种是在羽毛球后场所用的技术():</p>
+              <li><input type="checkbox" name="a9" id="a9" value="A.高远球"/><span class="votechoice"> A.高远球 </span></li>
+              <li><input type="checkbox" name="a9" id="b9" value="B.杀球"/><span class="votechoice"> B.杀球 </span></li>
+              <li><input type="checkbox" name="a9" id="c9" value="C.吊球"/><span class="votechoice"> C.吊球  </span></li>
+              <li><input type="checkbox" name="a9" id="d9" value="D.搓球"/><span class="votechoice"> D.搓球</span></li>
+          </ul>
+      </div>
+
+      <div class="votechoice">
+          <ul class="vote1">
+              <p>10.羽毛球正手发球有几种():</p>
+              <li><input type="checkbox" name="a10" id="a10" value="A.高远球" /><span class="votechoice"> A.高远球 </span></li>
+              <li><input type="checkbox" name="a10" id="b10" value="B.网前球"/><span class="votechoice"> B.网前球 </span></li>
+              <li><input type="checkbox" name="a10" id="c10" value="C.平快球"/><span class="votechoice"> C.平快球  </span></li>
+              <li><input type="checkbox" name="a10" id="d10" value="D.吊球"/><span class="votechoice"> D.吊球</span></li>
+          </ul>
+      </div>
+      <input name="s" type="button"  id="abutton" value="提交问卷" >
+      <p id="results"></p>
+  </div>
+
+
+</body>
+
+</html>

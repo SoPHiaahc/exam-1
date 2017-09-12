@@ -1,0 +1,1077 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>考试现场</title>>
+    <meta http-equiv="Content-Language" content="zh-cn">
+    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+    <LINK href="../Image/STYLE.CSS" type="text/css" rel="stylesheet">
+    <style>.outborder {
+        BORDER-RIGHT: #000000 1px solid; BORDER-TOP: #99ccff 1px solid; BORDER-LEFT: #333333 1px solid; BORDER-BOTTOM: #000000 1px solid; BACKGROUND-COLOR: #336699
+    }
+    .inputborder {
+        BORDER-RIGHT: 1px solid; BORDER-TOP: 1px solid; BORDER-LEFT: 1px solid; COLOR: #00ff00; BORDER-BOTTOM: 1px solid; BACKGROUND-COLOR: #333333; TEXT-ALIGN: center
+    }
+    .TipTable
+    {
+        FONT-FAMILY: Arial; FONT-SIZE: 13px; LINE-HEIGHT: 13pt;
+    }
+    table
+    {
+        FONT-FAMILY: Arial; FONT-SIZE: 16px; LINE-HEIGHT: 16pt;
+    }
+    td {FONT-FAMILY: Arial; FONT-SIZE: 16px; LINE-HEIGHT: 16pt}
+    </style>
+
+    <style type="text/css">
+        * { margin:0; padding:0;}
+        #footer { position:fixed; left:0; bottom:-1px; width:100%; background:#B2DCFC;}
+        #HeadTitle { position:fixed; left:0; top:-1px; height:95; width:100%; background:#f5fcfe;}
+        #main {}
+        * html #footer { position:absolute;}
+        * html #HeadTitle { position:absolute;}
+        body {overflow-y:auto; padding:0 10px 0 10px;}
+
+    </style>
+    <!--[if lte ie 6]>
+    <style type="text/css">
+        /*<![CDATA[*/
+html { overflow-x:auto; overflow-y:hidden;}
+   /*]]>*/
+   </style>
+<![endif]-->
+
+    <script type="text/javascript" language="javascript">
+        window.onbeforeunload = function () {
+            if (document.getElementById("txtHideComm").value != "CheckExam" && document.getElementById("txtHideComm").value != "SaveExam" && document.getElementById("txtHideComm").value != "AutoSaveExam") {
+                if (document.getElementById("txtHideEnter").value == "3") {
+                    document.getElementById("txtHideEnter").value = "4";
+                }
+                if (document.getElementById("txtHideEnter").value == "2") {
+                    document.getElementById("txtHideEnter").value = "3";
+                }
+                if (document.getElementById("txtHideEnter").value == "1") {
+                    document.getElementById("txtHideEnter").value = "2";
+                }
+                if (document.getElementById("txtHideEnter").value == "0") {
+                    document.getElementById("txtHideEnter").value = "1";
+                }
+                intEnter = document.getElementById("txtHideEnter").value;
+                if (intEnter > 3) {
+                    document.getElementById("txtHideComm").value = "EndExam";
+                    Form1.submit();
+                }
+                if (document.body.offsetWidth - 50 < event.clientX && event.clientY < 0)
+                    return "警告：关闭本窗口将自动以【零分】计算。\n\n请单击【交卷】按钮离开！(请注意,提交咨询最多三次)"
+            }
+            else {
+                document.getElementById("txtHideComm").value = "";
+            }
+        }
+        document.onkeydown = function () {
+            if (event.keyCode == 8) {
+                if (event.srcElement.tagName.toLowerCase() != "input"
+                    && event.srcElement.tagName.toLowerCase() != "textarea")
+                    event.returnValue = false;
+            }
+            if ((window.event.altKey) &&
+                ((window.event.keyCode == 37) ||   //屏蔽 Alt+ 方向键 ←
+                (window.event.keyCode == 39))) {  //屏蔽 Alt+ 方向键 →
+                alert("不准你使用ALT+方向键前进或后退网页！");
+                event.returnValue = false;
+            }
+            if ((event.keyCode == 116) ||                 //屏蔽 F5 刷新键
+                (event.keyCode == 112) ||                 //屏蔽 F1 刷新键
+                (event.keyCode == 27) ||
+                (event.ctrlKey && event.keyCode == 82)) { //Ctrl + R
+                event.keyCode = 0;
+                event.returnValue = false;
+            }
+            if ((event.ctrlKey) && (event.keyCode == 78))   //屏蔽 Ctrl+N
+                event.returnValue = false;
+            if ((event.shiftKey) && (event.keyCode == 121)) //屏蔽 shift+F10
+                event.returnValue = false;
+            if (window.event.srcElement.tagName == "A" && window.event.shiftKey)
+                window.event.returnValue = false;  //屏蔽 shift 加鼠标左键新开一网页
+            if ((window.event.altKey) && (window.event.keyCode == 115)) { //屏蔽Alt+F4
+                window.showModelessDialog("about:blank", "", "dialogWidth:1px;dialogheight:1px");
+                return false;
+            }
+            if (window.event.keyCode == 18 || window.event.keyCode == 91 || window.event.keyCode == 92)   //屏蔽非法键
+            {
+                window.event.keyCode = 0;
+                window.event.returnValue = false;
+            }
+        }
+
+        document.onselectstart = function () {
+            if (event.button != 1) {
+                return false;
+            }
+        }
+
+
+        function auto_submit() {
+            if (document.getElementById("txtHideComm").value != "CheckExam" && document.getElementById("txtHideComm").value != "SaveExam" && document.getElementById("txtHideComm").value != "AutoSaveExam") {
+                if (document.getElementById("txtHideFocus").value == "4") {
+                    document.getElementById("txtHideFocus").value = "5";
+                }
+                if (document.getElementById("txtHideFocus").value == "3") {
+                    document.getElementById("txtHideFocus").value = "4";
+                }
+                if (document.getElementById("txtHideFocus").value == "2") {
+                    document.getElementById("txtHideFocus").value = "3";
+                }
+                if (document.getElementById("txtHideFocus").value == "1") {
+                    document.getElementById("txtHideFocus").value = "2";
+                }
+                if (document.getElementById("txtHideFocus").value == "0") {
+                    document.getElementById("txtHideFocus").value = "1";
+                }
+                intFocus = document.getElementById("txtHideFocus").value;
+                if (intFocus > 4) {
+                    document.getElementById("txtHideComm").value = "EndExam";
+                    Form1.submit();
+                }
+                else {
+                    if (document.getElementById("txtHideFocus").value != "1") {
+                        alert("警告：你试图离开考试现场,系统将自动提交试卷！(只有三次机会)");
+                    }
+                }
+            }
+            else {
+                document.getElementById("txtHideComm").value = "";
+            }
+        }
+    </script>
+</head>
+<body style="OVERFLOW-X:HIDDEN;WORD-BREAK: break-all; WORD-WRAP: break-word" >
+<form method="post" action="FrmJoinExamPaper.aspx?LoadInfo=0&amp;PaperID=111" id="Form1">
+    <div class="aspNetHidden">
+        <input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" />
+        <input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" />
+        <input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="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" />
+    </div>
+
+    <script type="text/javascript">
+        //<![CDATA[
+        var theForm = document.forms['Form1'];
+        if (!theForm) {
+            theForm = document.Form1;
+        }
+        function __doPostBack(eventTarget, eventArgument) {
+            if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+                theForm.__EVENTTARGET.value = eventTarget;
+                theForm.__EVENTARGUMENT.value = eventArgument;
+                theForm.submit();
+            }
+        }
+        //]]>
+    </script>
+
+
+    <script src="/WebResource.axd?d=72p15XGZ3jpIvicBK03ryw2&amp;t=636074668705732421" type="text/javascript"></script>
+
+
+    <script src="/ScriptResource.axd?d=RgGnLFII4Ic4_o8x2QtFCZeQi4sGxm6SS1mQSeacnCdPoocOg_nOM5DapIeX6ayDEe_qorZS_gGzkQl9n_DTeMH9yme9GdJMKhrup_I-TN81&amp;t=16ab2387" type="text/javascript"></script>
+    <script type="text/javascript">
+        //<![CDATA[
+        if (typeof(Sys) === 'undefined') throw new Error('ASP.NET Ajax client-side framework failed to load.');
+        //]]>
+    </script>
+
+    <script src="/ScriptResource.axd?d=RgGnLFII4Ic4_o8x2QtFCZeQi4sGxm6SS1mQSeacnCdPoocOg_nOM5DapIeX6ayDnaLSZMNkYZrWKpmzPBIPCmb5zzaPBfF0QbZ6Jg1dM5FthQLs0Za-Lu35DUMqSGjQ0&amp;t=16ab2387" type="text/javascript"></script>
+    <div class="aspNetHidden">
+
+        <input type="hidden" name="__VIEWSTATEENCRYPTED" id="__VIEWSTATEENCRYPTED" value="" />
+        <input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="cRvpONA65GJA7R8vX9rrAXs2NXn11F8VUxkQpBVYYeE0BkcoPjyzWGpbkkZ7YHGisgzbWx/2ItsIFQZrStQm6QfxCMEdGcK3A3gFlW8bnLl+JhbHVvFFNH0nYzcF+5Oan8pmHJSAjk3Zrk3acZUEFwdjxJuyqzUhE9A+RPwV+Pgzm61qx8KVKAW0Ox5DZxldb7+z5dOKsvwN00WK7wiXsz1xUFyjmhTkOOmaCnBqNcUy9Jg86kcZ/vV3flbem1i0izE6yr8Sk52NChdTeFpLlpbiaoA0KVrtJzjMQMI/0LMiqWB2vrOVry3fxcPSaMqBu+tuZFJgE3I3iQGbNRG8y4xVNkpDj3nBFBs8WYlkH44fku2dlQ/VWaj5TA2cd4KWAUrE6OuJMiXjBhYQKcxz+Qf7R5dFXBnfYrtkoTeMoHRIE4wZ4KyxSNdg2bwCpfLccN5w8mUmOnNQCcEv6VheGHOSRWwriG5zHcXVZrc4sjoCAhszWaD/bYxgVY3wO3oHzFCUd9U4Fr6lkwH9/nEXiacRzac0C9akbR8f77UUZFaOL0i034RRmtEeD1hKVSCxwFG0JvbtmJXQPCdfIWq1+olMG4zbj9LyWCodN/715G5pdg5wULQ3ktdospB7sVqUnS/lGVhn33Sp/0iKNb13ROmiKDa59Epx7uP++9A8G6S6A6X/XRm5us3ijcH9M3lXMvPgPPJWtu7Ggf4ZtuZO+kSCv8YcIiLYrHkZDqUEnewkYqV/Gdl3iD4pfL1n09zLpn+WPy2V1mCmZCidh7QRlp7/bx+cecT/SMFgDUiagJgL6wlgAOdg138sA4RWxS0f/SdK+qiFuBM0cV1Rl6IYeO0iobDNdzUsX1oiRDr28MdbPRuL71weQIX+yJWaVdPDCbWeTw0/fC5iiF0TihaU19V3F6pTs4ACZLKACFWf8WJBukNJ/zCXisMDdmBg3OPpFvPGnlDmBPAfK5FtIwENUEhW7X44soukN2GZ/fnv9mwWBPmX9j6xKbRIOkRn/0r9odf8YA/fe4d9gniRuq769RscqMkKIWefyagyDMKHVBOtuE1XnkZjWDkDPk9CAAHROd5/CuJln7FU4EVDwWGITX+HsgFvoNJBtiUQxo9OmvM=" />
+    </div>
+    <script type="text/javascript">
+        //<![CDATA[
+        Sys.WebForms.PageRequestManager._initialize('SM', 'Form1', ['tUPPart','UPPart'], [], [], 90, '');
+        //]]>
+    </script>
+
+    <div id="UPPart">
+
+
+        <div id="HeadTitle" class="TipTable">
+            <table id="table3" borderColor="#cccccc" cellSpacing="0" borderColorDark="#ffffff" cellPadding="0" height="95" width="100%" align="center" border="1" class="TipTable">
+                <tr height="95">
+                    <td height="95" width="100%"  background="../image/ExamTop.gif" align="center">
+
+                        <table id="table4"  cellSpacing="0" cellPadding="0" height="95" width="1020" align="center" border="0" class="TipTable" >
+
+                            <tr>
+                                <td width="90" align="left" rowspan="3" valign="top"   style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;"><img id="ImageUser" src="../PublicFile/SysUserImg.gif" style="border-width:0px;height:85px;width:75px;" /></td>
+                                <td width="260" align="left" style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;">准考证号:<span id="labUserCode" style="color:Blue;font-weight:bold;">1309950997</span>
+                                </td>
+                                <td align="left" style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;">考试名称:<span id="labExamName" style="color:Blue;font-weight:bold;">模拟考试试卷示例</span></td>
+
+                                <td width="170" align="left"  style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;">开始时间：<input class="inputborder" style="WIDTH: 85px; HEIGHT: 20px" readOnly type="text" size="10" name="mystarttime" /></td>
+                                <td width="70" align="left"  style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;"><input  class="but2G" onclick="CheckExamPaper();" type="button" style='POSITION:relative;TOP:-2px' value="检  查" name="B4" /></td>
+                            </tr>
+                            <tr>
+
+                                <td width="260" align="left" style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;">考生姓名:<span id="labUserName" style="color:Blue;font-weight:bold;">启慧张</span></td>
+                                <td align="left" style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;">试卷总分:<span id="labPaperFen" style="color:Blue;font-weight:bold;">100</span></td>
+
+                                <td width="170" align="left" valign="top"  style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;">结束时间：<input class="inputborder" style="WIDTH: 85px; HEIGHT: 20px" readOnly type="text" size="10" name="myendtime" /></td>
+                                <td width="70" align="left" valign="top"  style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;"><input  class="but2B"  onclick="SaveExamPaper();" style='POSITION:relative;TOP:-2px' type="button" value="保  存" name="B5" /></td>
+                            </tr>
+                            <tr>
+
+                                <td width="260" align="left" style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;">单位部门:<span id="labDeptName" style="color:Blue;font-weight:bold;">客户中心</span></td>
+                                <td align="left" style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;">考试时长:<span id="labExamTime" style="color:Blue;font-weight:bold;">60</span><font color="blue"><b>分钟</b></font></td>
+                                <td width="170" align="left" valign="top"  style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;">剩余时间：<input class="inputborder" style="WIDTH: 85px; HEIGHT: 20px" readOnly type="text" size="10" name="lefttime" /></td>
+                                <td width="70" align="left" valign="top"  style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;"><input  class="but2R"   onclick="submitit();" type="button" style='POSITION:relative;TOP:-2px' value="交  卷" name="B3" /></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div id="main">
+            <table id="table2" borderColor="#ffffff" cellSpacing="0" borderColorDark="#ffffff" cellPadding="0"
+                   width="100%" align="center" border="0">
+
+                <tr>
+                    <td valign="top">
+                        <br /><br /><br /><br /><br />
+                        <span id="labATitle"><table   borderColor='#cccccc' cellSpacing='0' borderColorDark='#cccccc' cellPadding='0' width='100%' align='center' border='1' style='border-style:Solid;'><tr height='30'><td align='left' bgcolor='#5AA6E4'><font color='#ffffff'><a name='RubricTypeA'></a>&nbsp;&nbsp;<b>一、单选题</b>&nbsp;&nbsp;&nbsp;&nbsp;(共<font color='#ff0000'>10</font>题,每题<font color='#ff0000'>3</font>分,说明:选择一项正确的答案)</font></td></tr></table><br></span><div>
+                        <table cellspacing="0" rules="all" id="DataGridA" style="border-width:0px;width:100%;border-collapse:collapse;">
+                            <tr>
+                                <td>
+                                    <table  cellspacing="0" cellpadding="0" width="98%" align="left" border="0" style="border-collapse: collapse;border-top: 0px solid #cccccc;border-left: 0px solid #cccccc;">
+                                        <tr height="30">
+                                            <td bgcolor="#f5fcfe" style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;">
+                                                <span id="DataGridA_labADataTitle_0"><a title='标记此题'  href='#A0' onclick=javascript:SetTipRubricID('labRubricListAID','1')><img src='../image/MenuICO/Menu36.gif' border=0></a>1、金税工程的核心是建立（）<BR><a name='A0'></a></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;"><br />
+                                                <span id="DataGridA_RBLAData_0" onclick="javascript:WriteRBL(&#39;labRubricListAID&#39;,&#39;1&#39;)"><input id="DataGridA_RBLAData_0_0_0" type="radio" name="DataGridA$ctl02$RBLAData" value="B" /><label for="DataGridA_RBLAData_0_0_0">A、增值税认证系统</label><br /><input id="DataGridA_RBLAData_0_1_0" type="radio" name="DataGridA$ctl02$RBLAData" value="C" /><label for="DataGridA_RBLAData_0_1_0">B、增值税交叉稽核系统</label><br /><input id="DataGridA_RBLAData_0_2_0" type="radio" name="DataGridA$ctl02$RBLAData" value="A" /><label for="DataGridA_RBLAData_0_2_0">C、增值税防伪税控开票系统</label><br /><input id="DataGridA_RBLAData_0_3_0" type="radio" name="DataGridA$ctl02$RBLAData" value="D" /><label for="DataGridA_RBLAData_0_3_0">D、发票协查系统</label></span><br /><br />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;">
+
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr><tr>
+                            <td>
+                                <table  cellspacing="0" cellpadding="0" width="98%" align="left" border="0" style="border-collapse: collapse;border-top: 0px solid #cccccc;border-left: 0px solid #cccccc;">
+                                    <tr height="30">
+                                        <td bgcolor="#f5fcfe" style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;">
+                                            <span id="DataGridA_labADataTitle_1"><a title='标记此题'  href='#A1' onclick=javascript:SetTipRubricID('labRubricListAID','2')><img src='../image/MenuICO/Menu36.gif' border=0></a>2、《增值税暂行条例》所称价格明显偏低并无正当理由，按何种顺序确定销售额？（）<BR><a name='A1'></a></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;"><br />
+                                            <span id="DataGridA_RBLAData_1" onclick="javascript:WriteRBL(&#39;labRubricListAID&#39;,&#39;2&#39;)"><input id="DataGridA_RBLAData_1_0_1" type="radio" name="DataGridA$ctl03$RBLAData" value="D" /><label for="DataGridA_RBLAData_1_0_1">A、按纳税人按组成计税价格确定、当月同类货物的平均销售价格确定、最近时期同类货物的平均销售价格确定</label><br /><input id="DataGridA_RBLAData_1_1_1" type="radio" name="DataGridA$ctl03$RBLAData" value="C" /><label for="DataGridA_RBLAData_1_1_1">B、按纳税人按组成计税价格确定、最近时期同类货物的平均销售价格确定、当月同类货物的平均销售价格确定</label><br /><input id="DataGridA_RBLAData_1_2_1" type="radio" name="DataGridA$ctl03$RBLAData" value="B" /><label for="DataGridA_RBLAData_1_2_1">C、按纳税人最近时期同类货物的平均销售价格确定、按组成计税价格确定、当月同类货物的平均销售价格确定</label><br /><input id="DataGridA_RBLAData_1_3_1" type="radio" name="DataGridA$ctl03$RBLAData" value="A" /><label for="DataGridA_RBLAData_1_3_1">D、按纳税人最近时期同类货物的平均销售价格确定、按其他纳税人最近时期同类货物的平均销售价格确定、按组成计税价格确定。</label></span><br /><br />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;">
+
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr><tr>
+                            <td>
+                                <table  cellspacing="0" cellpadding="0" width="98%" align="left" border="0" style="border-collapse: collapse;border-top: 0px solid #cccccc;border-left: 0px solid #cccccc;">
+                                    <tr height="30">
+                                        <td bgcolor="#f5fcfe" style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;">
+                                            <span id="DataGridA_labADataTitle_2"><a title='标记此题'  href='#A2' onclick=javascript:SetTipRubricID('labRubricListAID','3')><img src='../image/MenuICO/Menu36.gif' border=0></a>3、商贸企业结束辅导期转为正式一般纳税人后，原则上其增值税防伪税控开票系统最高限额不得超过（）元<BR><BR><a name='A2'></a></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;"><br />
+                                            <span id="DataGridA_RBLAData_2" onclick="javascript:WriteRBL(&#39;labRubricListAID&#39;,&#39;3&#39;)"><input id="DataGridA_RBLAData_2_0_2" type="radio" name="DataGridA$ctl04$RBLAData" value="B" /><label for="DataGridA_RBLAData_2_0_2">A、10万</label><br /><input id="DataGridA_RBLAData_2_1_2" type="radio" name="DataGridA$ctl04$RBLAData" value="D" /><label for="DataGridA_RBLAData_2_1_2">B、1000万</label><br /><input id="DataGridA_RBLAData_2_2_2" type="radio" name="DataGridA$ctl04$RBLAData" value="A" /><label for="DataGridA_RBLAData_2_2_2">C、1万</label><br /><input id="DataGridA_RBLAData_2_3_2" type="radio" name="DataGridA$ctl04$RBLAData" value="C" /><label for="DataGridA_RBLAData_2_3_2">D、100万</label></span><br /><br />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;">
+
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr><tr>
+                            <td>
+                                <table  cellspacing="0" cellpadding="0" width="98%" align="left" border="0" style="border-collapse: collapse;border-top: 0px solid #cccccc;border-left: 0px solid #cccccc;">
+                                    <tr height="30">
+                                        <td bgcolor="#f5fcfe" style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;">
+                                            <span id="DataGridA_labADataTitle_3"><a title='标记此题'  href='#A3' onclick=javascript:SetTipRubricID('labRubricListAID','4')><img src='../image/MenuICO/Menu36.gif' border=0></a>4、某单位采取折扣方式销售货物，折扣额单独开蓝字发票，增值税销售额的确定是（）。<BR><a name='A3'></a></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;"><br />
+                                            <span id="DataGridA_RBLAData_3" onclick="javascript:WriteRBL(&#39;labRubricListAID&#39;,&#39;4&#39;)"><input id="DataGridA_RBLAData_3_0_3" type="radio" name="DataGridA$ctl05$RBLAData" value="D" /><label for="DataGridA_RBLAData_3_0_3">A、加上折扣额的销售额</label><br /><input id="DataGridA_RBLAData_3_1_3" type="radio" name="DataGridA$ctl05$RBLAData" value="C" /><label for="DataGridA_RBLAData_3_1_3">B、折扣额</label><br /><input id="DataGridA_RBLAData_3_2_3" type="radio" name="DataGridA$ctl05$RBLAData" value="A" /><label for="DataGridA_RBLAData_3_2_3">C、扣除折扣额的销售额</label><br /><input id="DataGridA_RBLAData_3_3_3" type="radio" name="DataGridA$ctl05$RBLAData" value="B" /><label for="DataGridA_RBLAData_3_3_3">D、不扣除折扣额的销售额</label></span><br /><br />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;">
+
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr><tr>
+                            <td>
+                                <table  cellspacing="0" cellpadding="0" width="98%" align="left" border="0" style="border-collapse: collapse;border-top: 0px solid #cccccc;border-left: 0px solid #cccccc;">
+                                    <tr height="30">
+                                        <td bgcolor="#f5fcfe" style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;">
+                                            <span id="DataGridA_labADataTitle_4"><a title='标记此题'  href='#A4' onclick=javascript:SetTipRubricID('labRubricListAID','5')><img src='../image/MenuICO/Menu36.gif' border=0></a>5、某消费税纳税义务人兼营不同税率的应税消费品，未分别核算销售额，经税务机关检查，正确的处理方法是（　　）。<a name='A4'></a></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;"><br />
+                                            <span id="DataGridA_RBLAData_4" onclick="javascript:WriteRBL(&#39;labRubricListAID&#39;,&#39;5&#39;)"><input id="DataGridA_RBLAData_4_0_4" type="radio" name="DataGridA$ctl06$RBLAData" value="A" /><label for="DataGridA_RBLAData_4_0_4">A、由当地税务机关决定</label><br /><input id="DataGridA_RBLAData_4_1_4" type="radio" name="DataGridA$ctl06$RBLAData" value="D" /><label for="DataGridA_RBLAData_4_1_4">B、按不同税率货物销售比分别确定适用税率，计算纳税</label><br /><input id="DataGridA_RBLAData_4_2_4" type="radio" name="DataGridA$ctl06$RBLAData" value="B" /><label for="DataGridA_RBLAData_4_2_4">C、从高适用税率计算纳税</label><br /><input id="DataGridA_RBLAData_4_3_4" type="radio" name="DataGridA$ctl06$RBLAData" value="C" /><label for="DataGridA_RBLAData_4_3_4">D、按平均税率计算纳税</label></span><br /><br />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;">
+
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr><tr>
+                            <td>
+                                <table  cellspacing="0" cellpadding="0" width="98%" align="left" border="0" style="border-collapse: collapse;border-top: 0px solid #cccccc;border-left: 0px solid #cccccc;">
+                                    <tr height="30">
+                                        <td bgcolor="#f5fcfe" style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;">
+                                            <span id="DataGridA_labADataTitle_5"><a title='标记此题'  href='#A5' onclick=javascript:SetTipRubricID('labRubricListAID','6')><img src='../image/MenuICO/Menu36.gif' border=0></a>6、下面有关企业所得税税率说法正确的是（）。<BR><a name='A5'></a></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;"><br />
+                                            <span id="DataGridA_RBLAData_5" onclick="javascript:WriteRBL(&#39;labRubricListAID&#39;,&#39;6&#39;)"><input id="DataGridA_RBLAData_5_0_5" type="radio" name="DataGridA$ctl07$RBLAData" value="A" /><label for="DataGridA_RBLAData_5_0_5">A、企业所得税的税率为25％</label><br /><input id="DataGridA_RBLAData_5_1_5" type="radio" name="DataGridA$ctl07$RBLAData" value="C" /><label for="DataGridA_RBLAData_5_1_5">B、符合条件的小型微利企业适用税率为15％</label><br /><input id="DataGridA_RBLAData_5_2_5" type="radio" name="DataGridA$ctl07$RBLAData" value="D" /><label for="DataGridA_RBLAData_5_2_5">C、国家需要重点扶持的高新技术企业适用税率为10％</label><br /><input id="DataGridA_RBLAData_5_3_5" type="radio" name="DataGridA$ctl07$RBLAData" value="B" /><label for="DataGridA_RBLAData_5_3_5">D、非居民企业取得来源于中国境内的所得适用税率均为20％</label></span><br /><br />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;">
+
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr><tr>
+                            <td>
+                                <table  cellspacing="0" cellpadding="0" width="98%" align="left" border="0" style="border-collapse: collapse;border-top: 0px solid #cccccc;border-left: 0px solid #cccccc;">
+                                    <tr height="30">
+                                        <td bgcolor="#f5fcfe" style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;">
+                                            <span id="DataGridA_labADataTitle_6"><a title='标记此题'  href='#A6' onclick=javascript:SetTipRubricID('labRubricListAID','7')><img src='../image/MenuICO/Menu36.gif' border=0></a>7、某居民企业2008年实际发放的工资、薪金总额为150万元，福利费本期发生30万元，拨缴的工会经费3万元，已经取得工会拨缴收据，实际发生职工教育经费4.50万元，该企业在计算2008年应纳税所得额时，应调增的应纳税所得额为（　　）万元。<BR><a name='A6'></a></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;"><br />
+                                            <span id="DataGridA_RBLAData_6" onclick="javascript:WriteRBL(&#39;labRubricListAID&#39;,&#39;7&#39;)"><input id="DataGridA_RBLAData_6_0_6" type="radio" name="DataGridA$ctl08$RBLAData" value="A" /><label for="DataGridA_RBLAData_6_0_6">A、0</label><br /><input id="DataGridA_RBLAData_6_1_6" type="radio" name="DataGridA$ctl08$RBLAData" value="D" /><label for="DataGridA_RBLAData_6_1_6">B、35.50</label><br /><input id="DataGridA_RBLAData_6_2_6" type="radio" name="DataGridA$ctl08$RBLAData" value="B" /><label for="DataGridA_RBLAData_6_2_6">C、7.75</label><br /><input id="DataGridA_RBLAData_6_3_6" type="radio" name="DataGridA$ctl08$RBLAData" value="C" /><label for="DataGridA_RBLAData_6_3_6">D、9.75</label></span><br /><br />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;">
+
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr><tr>
+                            <td>
+                                <table  cellspacing="0" cellpadding="0" width="98%" align="left" border="0" style="border-collapse: collapse;border-top: 0px solid #cccccc;border-left: 0px solid #cccccc;">
+                                    <tr height="30">
+                                        <td bgcolor="#f5fcfe" style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;">
+                                            <span id="DataGridA_labADataTitle_7"><a title='标记此题'  href='#A7' onclick=javascript:SetTipRubricID('labRubricListAID','8')><img src='../image/MenuICO/Menu36.gif' border=0></a>8、根据《中华人民共和国企业所得税法》及其实施条例规定，小型微利企业，是指从事国家非限制和禁止行业，并符合（）条件的企业。<BR><a name='A7'></a></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;"><br />
+                                            <span id="DataGridA_RBLAData_7" onclick="javascript:WriteRBL(&#39;labRubricListAID&#39;,&#39;8&#39;)"><input id="DataGridA_RBLAData_7_0_7" type="radio" name="DataGridA$ctl09$RBLAData" value="D" /><label for="DataGridA_RBLAData_7_0_7">A、其他企业，年度应纳税所得额不超过30万元，从业人员不超过80人，资产总额不超过3000万元</label><br /><input id="DataGridA_RBLAData_7_1_7" type="radio" name="DataGridA$ctl09$RBLAData" value="C" /><label for="DataGridA_RBLAData_7_1_7">B、工业企业，年度应纳税所得额不超过30万元，从业人员不超过100人，资产总额不超过1000万元</label><br /><input id="DataGridA_RBLAData_7_2_7" type="radio" name="DataGridA$ctl09$RBLAData" value="A" /><label for="DataGridA_RBLAData_7_2_7">C、工业企业，年度应纳税所得额不超过30万元，从业人员不超过80人，资产总额不超过3000万元</label><br /><input id="DataGridA_RBLAData_7_3_7" type="radio" name="DataGridA$ctl09$RBLAData" value="B" /><label for="DataGridA_RBLAData_7_3_7">D、工业企业，年度应纳税所得额不超过30万元，从业人员不超过100人，资产总额不超过3000万元</label></span><br /><br />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;">
+
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr><tr>
+                            <td>
+                                <table  cellspacing="0" cellpadding="0" width="98%" align="left" border="0" style="border-collapse: collapse;border-top: 0px solid #cccccc;border-left: 0px solid #cccccc;">
+                                    <tr height="30">
+                                        <td bgcolor="#f5fcfe" style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;">
+                                            <span id="DataGridA_labADataTitle_8"><a title='标记此题'  href='#A8' onclick=javascript:SetTipRubricID('labRubricListAID','9')><img src='../image/MenuICO/Menu36.gif' border=0></a>9、下面哪个不是企业所得税纳税人（）。<BR><a name='A8'></a></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;"><br />
+                                            <span id="DataGridA_RBLAData_8" onclick="javascript:WriteRBL(&#39;labRubricListAID&#39;,&#39;9&#39;)"><input id="DataGridA_RBLAData_8_0_8" type="radio" name="DataGridA$ctl10$RBLAData" value="A" /><label for="DataGridA_RBLAData_8_0_8">A、国有企业</label><br /><input id="DataGridA_RBLAData_8_1_8" type="radio" name="DataGridA$ctl10$RBLAData" value="B" /><label for="DataGridA_RBLAData_8_1_8">B、外商投资企业</label><br /><input id="DataGridA_RBLAData_8_2_8" type="radio" name="DataGridA$ctl10$RBLAData" value="C" /><label for="DataGridA_RBLAData_8_2_8">C、私营有限责任公司</label><br /><input id="DataGridA_RBLAData_8_3_8" type="radio" name="DataGridA$ctl10$RBLAData" value="D" /><label for="DataGridA_RBLAData_8_3_8">D、私营合伙企业</label></span><br /><br />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;">
+
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr><tr>
+                            <td>
+                                <table  cellspacing="0" cellpadding="0" width="98%" align="left" border="0" style="border-collapse: collapse;border-top: 0px solid #cccccc;border-left: 0px solid #cccccc;">
+                                    <tr height="30">
+                                        <td bgcolor="#f5fcfe" style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;">
+                                            <span id="DataGridA_labADataTitle_9"><a title='标记此题'  href='#A9' onclick=javascript:SetTipRubricID('labRubricListAID','10')><img src='../image/MenuICO/Menu36.gif' border=0></a>10、历史成本，是指企业取得该项资产时()的支出。<BR><a name='A9'></a></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;"><br />
+                                            <span id="DataGridA_RBLAData_9" onclick="javascript:WriteRBL(&#39;labRubricListAID&#39;,&#39;10&#39;)"><input id="DataGridA_RBLAData_9_0_9" type="radio" name="DataGridA$ctl11$RBLAData" value="D" /><label for="DataGridA_RBLAData_9_0_9">A、核定</label><br /><input id="DataGridA_RBLAData_9_1_9" type="radio" name="DataGridA$ctl11$RBLAData" value="C" /><label for="DataGridA_RBLAData_9_1_9">B、预付</label><br /><input id="DataGridA_RBLAData_9_2_9" type="radio" name="DataGridA$ctl11$RBLAData" value="A" /><label for="DataGridA_RBLAData_9_2_9">C、实际发生</label><br /><input id="DataGridA_RBLAData_9_3_9" type="radio" name="DataGridA$ctl11$RBLAData" value="B" /><label for="DataGridA_RBLAData_9_3_9">D、估价</label></span><br /><br />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;">
+
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        </table>
+                    </div><span id="labBTitle"><br><br><table   borderColor='#cccccc' cellSpacing='0' borderColorDark='#cccccc' cellPadding='0' width='100%' align='center' border='1' style='border-style:Solid;'><tr height='30'><td align='left' bgcolor='#5AA6E4'><font color='#ffffff'><a name='RubricTypeB'></a>&nbsp;&nbsp;<b>二、多选题</b>&nbsp;&nbsp;&nbsp;&nbsp;(共<font color='#ff0000'>10</font>题,每题<font color='#ff0000'>4</font>分,说明:选择多项正确的答案)</font></td></tr></table><br></span><div>
+                        <table cellspacing="0" rules="all" id="DataGridB" style="border-width:0px;width:100%;border-collapse:collapse;">
+                            <tr>
+                                <td>
+                                    <table  cellspacing="0" cellpadding="0" width="98%" align="left" border="0" >
+                                        <tr height="30">
+                                            <td bgcolor="#f5fcfe" style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;">
+                                                <span id="DataGridB_labBDataTitle_0"><a title='标记此题'  href='#B0' onclick=javascript:SetTipRubricID('labRubricListBID','1')><img src='../image/MenuICO/Menu36.gif' border=0></a>1、享受残疾人就业增值税优惠政策的条件规定有( &nbsp;&nbsp; )。<br><a name='B0'></a></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;"><br />
+                                                <span id="DataGridB_CBLBData_0" onclick="javascript:WriteRBL(&#39;labRubricListBID&#39;,&#39;1&#39;)"><input id="DataGridB_CBLBData_0_0_0" type="checkbox" name="DataGridB$ctl02$CBLBData$0" value="C" /><label for="DataGridB_CBLBData_0_0_0">A、具备安置残疾人上岗工作的基本设置 <br></label><br /><input id="DataGridB_CBLBData_0_1_0" type="checkbox" name="DataGridB$ctl02$CBLBData$1" value="A" /><label for="DataGridB_CBLBData_0_1_0">B、依法与安置残疾人签订有1年以上劳动合同，且实际在岗工作 <br></label><br /><input id="DataGridB_CBLBData_0_2_0" type="checkbox" name="DataGridB$ctl02$CBLBData$2" value="B" /><label for="DataGridB_CBLBData_0_2_0">C、月实际安置的残疾人人数多于10人<br></label><br /><input id="DataGridB_CBLBData_0_3_0" type="checkbox" name="DataGridB$ctl02$CBLBData$3" value="D" /><label for="DataGridB_CBLBData_0_3_0">D、月平均安置的残疾人占在职职工总数10％以上 <br></label></span><br /><br />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;">
+
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr><tr>
+                            <td>
+                                <table  cellspacing="0" cellpadding="0" width="98%" align="left" border="0" >
+                                    <tr height="30">
+                                        <td bgcolor="#f5fcfe" style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;">
+                                            <span id="DataGridB_labBDataTitle_1"><a title='标记此题'  href='#B1' onclick=javascript:SetTipRubricID('labRubricListBID','2')><img src='../image/MenuICO/Menu36.gif' border=0></a>2、下列关于小规模纳税人的说法正确的是（&nbsp; &nbsp;&nbsp;）<br><a name='B1'></a></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;"><br />
+                                            <span id="DataGridB_CBLBData_1" onclick="javascript:WriteRBL(&#39;labRubricListBID&#39;,&#39;2&#39;)"><input id="DataGridB_CBLBData_1_0_1" type="checkbox" name="DataGridB$ctl03$CBLBData$0" value="C" /><label for="DataGridB_CBLBData_1_0_1">A、小规模纳税人增值税征收率为4%和6%。<br></label><br /><input id="DataGridB_CBLBData_1_1_1" type="checkbox" name="DataGridB$ctl03$CBLBData$1" value="D" /><label for="DataGridB_CBLBData_1_1_1">B、小规模纳税人会计核算健全，能够提供准确税务资料的，可以向主管税务机关申请资</label><br /><input id="DataGridB_CBLBData_1_2_1" type="checkbox" name="DataGridB$ctl03$CBLBData$2" value="A" /><label for="DataGridB_CBLBData_1_2_1">C、小规模纳税人销售货物或者应税劳务，实行按照销售额和征收率计算应纳税额的简易办法，并不得抵扣进项税额<br></label><br /><input id="DataGridB_CBLBData_1_3_1" type="checkbox" name="DataGridB$ctl03$CBLBData$3" value="B" /><label for="DataGridB_CBLBData_1_3_1">D、小规模纳税人增值税征收率为3%。<br></label></span><br /><br />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;">
+
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr><tr>
+                            <td>
+                                <table  cellspacing="0" cellpadding="0" width="98%" align="left" border="0" >
+                                    <tr height="30">
+                                        <td bgcolor="#f5fcfe" style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;">
+                                            <span id="DataGridB_labBDataTitle_2"><a title='标记此题'  href='#B2' onclick=javascript:SetTipRubricID('labRubricListBID','3')><img src='../image/MenuICO/Menu36.gif' border=0></a>3、目前允许凭非增值税专用发票计算抵扣进项税额的有（&nbsp;&nbsp; ）<br><a name='B2'></a></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;"><br />
+                                            <span id="DataGridB_CBLBData_2" onclick="javascript:WriteRBL(&#39;labRubricListBID&#39;,&#39;3&#39;)"><input id="DataGridB_CBLBData_2_0_2" type="checkbox" name="DataGridB$ctl04$CBLBData$0" value="A" /><label for="DataGridB_CBLBData_2_0_2">A、购进免税农产品<br></label><br /><input id="DataGridB_CBLBData_2_1_2" type="checkbox" name="DataGridB$ctl04$CBLBData$1" value="B" /><label for="DataGridB_CBLBData_2_1_2">B、生产企业一般纳税人从废旧物回收经营单位购进废旧物资&nbsp;&nbsp;&nbsp;<br></label><br /><input id="DataGridB_CBLBData_2_2_2" type="checkbox" name="DataGridB$ctl04$CBLBData$2" value="C" /><label for="DataGridB_CBLBData_2_2_2">C、购进固定资产&nbsp;<br></label><br /><input id="DataGridB_CBLBData_2_3_2" type="checkbox" name="DataGridB$ctl04$CBLBData$3" value="D" /><label for="DataGridB_CBLBData_2_3_2">D、工业企业一般纳税人购进原材料支付的运输费用 <br></label></span><br /><br />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;">
+
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr><tr>
+                            <td>
+                                <table  cellspacing="0" cellpadding="0" width="98%" align="left" border="0" >
+                                    <tr height="30">
+                                        <td bgcolor="#f5fcfe" style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;">
+                                            <span id="DataGridB_labBDataTitle_3"><a title='标记此题'  href='#B3' onclick=javascript:SetTipRubricID('labRubricListBID','4')><img src='../image/MenuICO/Menu36.gif' border=0></a>4、某小汽车下列经济业务应按最高销售价格计算消费税的有（）。<a name='B3'></a></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;"><br />
+                                            <span id="DataGridB_CBLBData_3" onclick="javascript:WriteRBL(&#39;labRubricListBID&#39;,&#39;4&#39;)"><input id="DataGridB_CBLBData_3_0_3" type="checkbox" name="DataGridB$ctl05$CBLBData$0" value="B" /><label for="DataGridB_CBLBData_3_0_3">A、将自产小汽车对外投资</label><br /><input id="DataGridB_CBLBData_3_1_3" type="checkbox" name="DataGridB$ctl05$CBLBData$1" value="D" /><label for="DataGridB_CBLBData_3_1_3">B、将自产小汽车交换零配件</label><br /><input id="DataGridB_CBLBData_3_2_3" type="checkbox" name="DataGridB$ctl05$CBLBData$2" value="A" /><label for="DataGridB_CBLBData_3_2_3">C、将自产小汽车用于办公&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label><br /><input id="DataGridB_CBLBData_3_3_3" type="checkbox" name="DataGridB$ctl05$CBLBData$3" value="C" /><label for="DataGridB_CBLBData_3_3_3">D、将进口小汽车配件对外偿债&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></span><br /><br />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;">
+
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr><tr>
+                            <td>
+                                <table  cellspacing="0" cellpadding="0" width="98%" align="left" border="0" >
+                                    <tr height="30">
+                                        <td bgcolor="#f5fcfe" style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;">
+                                            <span id="DataGridB_labBDataTitle_4"><a title='标记此题'  href='#B4' onclick=javascript:SetTipRubricID('labRubricListBID','5')><img src='../image/MenuICO/Menu36.gif' border=0></a>5、 企业所得税对于特别纳税调整的规定,表述正确的是(&nbsp;&nbsp; )。<a name='B4'></a></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;"><br />
+                                            <span id="DataGridB_CBLBData_4" onclick="javascript:WriteRBL(&#39;labRubricListBID&#39;,&#39;5&#39;)"><input id="DataGridB_CBLBData_4_0_4" type="checkbox" name="DataGridB$ctl06$CBLBData$0" value="B" /><label for="DataGridB_CBLBData_4_0_4">A、企业实施其他不具有合理商业目的的安排而减少其应纳税收入或者所得额的，税务机关有权按照合理方法调整。</label><br /><input id="DataGridB_CBLBData_4_1_4" type="checkbox" name="DataGridB$ctl06$CBLBData$1" value="C" /><label for="DataGridB_CBLBData_4_1_4">B、税务机关在进行关联业务调查时，企业及其关联方，以及与关联业务调查有关的其他企业，应当按照规定提供相关资料。</label><br /><input id="DataGridB_CBLBData_4_2_4" type="checkbox" name="DataGridB$ctl06$CBLBData$2" value="A" /><label for="DataGridB_CBLBData_4_2_4">C、税务机关进行特别纳税调整时，除补征税款的，还要按照征管法的规定加收罚款</label><br /><input id="DataGridB_CBLBData_4_3_4" type="checkbox" name="DataGridB$ctl06$CBLBData$3" value="D" /><label for="DataGridB_CBLBData_4_3_4">D、企业与其关联方之间的业务往来，不符合独立交易原则而减少企业或者其关联方应纳税收入或者所得额的，税务机关有权按照合理方法调整。</label></span><br /><br />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;">
+
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr><tr>
+                            <td>
+                                <table  cellspacing="0" cellpadding="0" width="98%" align="left" border="0" >
+                                    <tr height="30">
+                                        <td bgcolor="#f5fcfe" style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;">
+                                            <span id="DataGridB_labBDataTitle_5"><a title='标记此题'  href='#B5' onclick=javascript:SetTipRubricID('labRubricListBID','6')><img src='../image/MenuICO/Menu36.gif' border=0></a>6、权益性投资收益包括（&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; ）。<a name='B5'></a></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;"><br />
+                                            <span id="DataGridB_CBLBData_5" onclick="javascript:WriteRBL(&#39;labRubricListBID&#39;,&#39;6&#39;)"><input id="DataGridB_CBLBData_5_0_5" type="checkbox" name="DataGridB$ctl07$CBLBData$0" value="C" /><label for="DataGridB_CBLBData_5_0_5">A、利息&nbsp;&nbsp;&nbsp;&nbsp;</label><br /><input id="DataGridB_CBLBData_5_1_5" type="checkbox" name="DataGridB$ctl07$CBLBData$1" value="B" /><label for="DataGridB_CBLBData_5_1_5">B、红利&nbsp;&nbsp;&nbsp;&nbsp;</label><br /><input id="DataGridB_CBLBData_5_2_5" type="checkbox" name="DataGridB$ctl07$CBLBData$2" value="A" /><label for="DataGridB_CBLBData_5_2_5">C、股息&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label><br /><input id="DataGridB_CBLBData_5_3_5" type="checkbox" name="DataGridB$ctl07$CBLBData$3" value="D" /><label for="DataGridB_CBLBData_5_3_5">D、联营分利</label></span><br /><br />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;">
+
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr><tr>
+                            <td>
+                                <table  cellspacing="0" cellpadding="0" width="98%" align="left" border="0" >
+                                    <tr height="30">
+                                        <td bgcolor="#f5fcfe" style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;">
+                                            <span id="DataGridB_labBDataTitle_6"><a title='标记此题'  href='#B6' onclick=javascript:SetTipRubricID('labRubricListBID','7')><img src='../image/MenuICO/Menu36.gif' border=0></a>7、按照《中华人民共和国企业所得税法》及实施条例的规定，通过（&nbsp;&nbsp;&nbsp;&nbsp; ）等方式取得的固定资产，以该资产的公允价值和支付的相关税费为计税基础。<a name='B6'></a></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;"><br />
+                                            <span id="DataGridB_CBLBData_6" onclick="javascript:WriteRBL(&#39;labRubricListBID&#39;,&#39;7&#39;)"><input id="DataGridB_CBLBData_6_0_6" type="checkbox" name="DataGridB$ctl08$CBLBData$0" value="B" /><label for="DataGridB_CBLBData_6_0_6">A、投资&nbsp;&nbsp;&nbsp;</label><br /><input id="DataGridB_CBLBData_6_1_6" type="checkbox" name="DataGridB$ctl08$CBLBData$1" value="A" /><label for="DataGridB_CBLBData_6_1_6">B、非货币性资产交换&nbsp;&nbsp;</label><br /><input id="DataGridB_CBLBData_6_2_6" type="checkbox" name="DataGridB$ctl08$CBLBData$2" value="C" /><label for="DataGridB_CBLBData_6_2_6">C、捐赠&nbsp;&nbsp;&nbsp;</label><br /><input id="DataGridB_CBLBData_6_3_6" type="checkbox" name="DataGridB$ctl08$CBLBData$3" value="D" /><label for="DataGridB_CBLBData_6_3_6">D、债务重组</label></span><br /><br />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;">
+
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr><tr>
+                            <td>
+                                <table  cellspacing="0" cellpadding="0" width="98%" align="left" border="0" >
+                                    <tr height="30">
+                                        <td bgcolor="#f5fcfe" style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;">
+                                            <span id="DataGridB_labBDataTitle_7"><a title='标记此题'  href='#B7' onclick=javascript:SetTipRubricID('labRubricListBID','8')><img src='../image/MenuICO/Menu36.gif' border=0></a>8、按照《中华人民共和国企业所得税法》及实施条例的规定，下列表述正确的有（&nbsp;&nbsp;&nbsp;&nbsp; ）。<a name='B7'></a></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;"><br />
+                                            <span id="DataGridB_CBLBData_7" onclick="javascript:WriteRBL(&#39;labRubricListBID&#39;,&#39;8&#39;)"><input id="DataGridB_CBLBData_7_0_7" type="checkbox" name="DataGridB$ctl09$CBLBData$0" value="B" /><label for="DataGridB_CBLBData_7_0_7">A、无形资产的摊销年限不得低于10年&nbsp;</label><br /><input id="DataGridB_CBLBData_7_1_7" type="checkbox" name="DataGridB$ctl09$CBLBData$1" value="C" /><label for="DataGridB_CBLBData_7_1_7">B、作为投资的无形资产，有关法律规定或者合同约定了使用年限的，可以按照规定或者约定的使用年限分期摊销</label><br /><input id="DataGridB_CBLBData_7_2_7" type="checkbox" name="DataGridB$ctl09$CBLBData$2" value="A" /><label for="DataGridB_CBLBData_7_2_7">C、无形资产按照直线法计算的摊销费用，准予扣除</label><br /><input id="DataGridB_CBLBData_7_3_7" type="checkbox" name="DataGridB$ctl09$CBLBData$3" value="D" /><label for="DataGridB_CBLBData_7_3_7">D、外购商誉的支出，在企业整体转让或者清算时，准予扣除</label></span><br /><br />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;">
+
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr><tr>
+                            <td>
+                                <table  cellspacing="0" cellpadding="0" width="98%" align="left" border="0" >
+                                    <tr height="30">
+                                        <td bgcolor="#f5fcfe" style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;">
+                                            <span id="DataGridB_labBDataTitle_8"><a title='标记此题'  href='#B8' onclick=javascript:SetTipRubricID('labRubricListBID','9')><img src='../image/MenuICO/Menu36.gif' border=0></a>9、按照《中华人民共和国企业所得税法》及实施条例的规定，生产性生物资产计算折旧的最低年限为10年的有（&nbsp;&nbsp;&nbsp; ）。<a name='B8'></a></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;"><br />
+                                            <span id="DataGridB_CBLBData_8" onclick="javascript:WriteRBL(&#39;labRubricListBID&#39;,&#39;9&#39;)"><input id="DataGridB_CBLBData_8_0_8" type="checkbox" name="DataGridB$ctl10$CBLBData$0" value="B" /><label for="DataGridB_CBLBData_8_0_8">A、薪炭林&nbsp;&nbsp;&nbsp;</label><br /><input id="DataGridB_CBLBData_8_1_8" type="checkbox" name="DataGridB$ctl10$CBLBData$1" value="C" /><label for="DataGridB_CBLBData_8_1_8">B、产畜&nbsp;&nbsp;</label><br /><input id="DataGridB_CBLBData_8_2_8" type="checkbox" name="DataGridB$ctl10$CBLBData$2" value="A" /><label for="DataGridB_CBLBData_8_2_8">C、经济林&nbsp;&nbsp;&nbsp;</label><br /><input id="DataGridB_CBLBData_8_3_8" type="checkbox" name="DataGridB$ctl10$CBLBData$3" value="D" /><label for="DataGridB_CBLBData_8_3_8">D、役畜</label></span><br /><br />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;">
+
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr><tr>
+                            <td>
+                                <table  cellspacing="0" cellpadding="0" width="98%" align="left" border="0" >
+                                    <tr height="30">
+                                        <td bgcolor="#f5fcfe" style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;">
+                                            <span id="DataGridB_labBDataTitle_9"><a title='标记此题'  href='#B9' onclick=javascript:SetTipRubricID('labRubricListBID','10')><img src='../image/MenuICO/Menu36.gif' border=0></a>10、符合收入确认条件，采取下列商品销售方式的，确认收入实现时间正确的是（&nbsp;&nbsp;&nbsp;&nbsp; ）：<a name='B9'></a></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;"><br />
+                                            <span id="DataGridB_CBLBData_9" onclick="javascript:WriteRBL(&#39;labRubricListBID&#39;,&#39;10&#39;)"><input id="DataGridB_CBLBData_9_0_9" type="checkbox" name="DataGridB$ctl11$CBLBData$0" value="C" /><label for="DataGridB_CBLBData_9_0_9">A、销售商品采用支付手续费方式委托代销的，在收到代销清单时确认收入。</label><br /><input id="DataGridB_CBLBData_9_1_9" type="checkbox" name="DataGridB$ctl11$CBLBData$1" value="A" /><label for="DataGridB_CBLBData_9_1_9">B、销售商品采用托收承付方式的，在办妥托收手续时确认收入。</label><br /><input id="DataGridB_CBLBData_9_2_9" type="checkbox" name="DataGridB$ctl11$CBLBData$2" value="B" /><label for="DataGridB_CBLBData_9_2_9">C、销售商品需要安装和检验的，如果安装程序比较简单，应在购买方接受商品以及安装和检验完毕时确认收入。</label><br /><input id="DataGridB_CBLBData_9_3_9" type="checkbox" name="DataGridB$ctl11$CBLBData$3" value="D" /><label for="DataGridB_CBLBData_9_3_9">D、销售商品采取预收款方式的，在发出商品时确认收入。</label></span><br /><br />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;">
+
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        </table>
+                    </div>
+                        <span id="labCTitle"><br><br><table   borderColor='#cccccc' cellSpacing='0' borderColorDark='#cccccc' cellPadding='0' width='100%' align='center' border='1' style='border-style:Solid;'><tr height='30'><td align='left' bgcolor='#5AA6E4'><font color='#ffffff'><a name='RubricTypeC'></a>&nbsp;&nbsp;<b>三、判断题</b>&nbsp;&nbsp;&nbsp;&nbsp;(共<font color='#ff0000'>10</font>题,每题<font color='#ff0000'>3</font>分,说明:选择一项正确的答案)</font></td></tr></table><br></span><div>
+                        <table cellspacing="0" rules="all" id="DataGridC" style="border-width:0px;width:100%;border-collapse:collapse;">
+                            <tr>
+                                <td>
+                                    <table  cellspacing="0" cellpadding="0" width="98%" align="left" border="0" >
+                                        <tr height="30">
+                                            <td bgcolor="#f5fcfe" style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;">
+                                                <span id="DataGridC_labCDataTitle_0"><a title='标记此题'  href='#C0' onclick=javascript:SetTipRubricID('labRubricListCID','1')><img src='../image/MenuICO/Menu36.gif' border=0></a>1、从事农业生产的有限责任公司不属于农业生产者。（ &nbsp;&nbsp;）<br><a name='C0'></a></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;"><br />
+                                                <span id="DataGridC_RBLCData_0" onclick="javascript:WriteRBL(&#39;labRubricListCID&#39;,&#39;1&#39;)"><input id="DataGridC_RBLCData_0_0_0" type="radio" name="DataGridC$ctl02$RBLCData" value="Y" /><label for="DataGridC_RBLCData_0_0_0">正确</label><input id="DataGridC_RBLCData_0_1_0" type="radio" name="DataGridC$ctl02$RBLCData" value="N" /><label for="DataGridC_RBLCData_0_1_0">错误</label></span><br /><br />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;">
+
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr><tr>
+                            <td>
+                                <table  cellspacing="0" cellpadding="0" width="98%" align="left" border="0" >
+                                    <tr height="30">
+                                        <td bgcolor="#f5fcfe" style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;">
+                                            <span id="DataGridC_labCDataTitle_1"><a title='标记此题'  href='#C1' onclick=javascript:SetTipRubricID('labRubricListCID','2')><img src='../image/MenuICO/Menu36.gif' border=0></a>2、纳税人进口货物，应当自海关填发海关进口增值税专用缴款书之日起7日内缴纳税款。（ &nbsp; ）<a name='C1'></a></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;"><br />
+                                            <span id="DataGridC_RBLCData_1" onclick="javascript:WriteRBL(&#39;labRubricListCID&#39;,&#39;2&#39;)"><input id="DataGridC_RBLCData_1_0_1" type="radio" name="DataGridC$ctl03$RBLCData" value="Y" /><label for="DataGridC_RBLCData_1_0_1">正确</label><input id="DataGridC_RBLCData_1_1_1" type="radio" name="DataGridC$ctl03$RBLCData" value="N" /><label for="DataGridC_RBLCData_1_1_1">错误</label></span><br /><br />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;">
+
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr><tr>
+                            <td>
+                                <table  cellspacing="0" cellpadding="0" width="98%" align="left" border="0" >
+                                    <tr height="30">
+                                        <td bgcolor="#f5fcfe" style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;">
+                                            <span id="DataGridC_labCDataTitle_2"><a title='标记此题'  href='#C2' onclick=javascript:SetTipRubricID('labRubricListCID','3')><img src='../image/MenuICO/Menu36.gif' border=0></a>3、纳税人销售应税消费品采取赊销和分期收款结算方式的，其纳税义务发生时间为书面合同约定的收款日期的当天，书面合同没有约定收款日期或者无书面合同的，为收讫销售款或者取得索取销售款凭据的当天。（&nbsp;&nbsp;&nbsp; ）<a name='C2'></a></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;"><br />
+                                            <span id="DataGridC_RBLCData_2" onclick="javascript:WriteRBL(&#39;labRubricListCID&#39;,&#39;3&#39;)"><input id="DataGridC_RBLCData_2_0_2" type="radio" name="DataGridC$ctl04$RBLCData" value="Y" /><label for="DataGridC_RBLCData_2_0_2">正确</label><input id="DataGridC_RBLCData_2_1_2" type="radio" name="DataGridC$ctl04$RBLCData" value="N" /><label for="DataGridC_RBLCData_2_1_2">错误</label></span><br /><br />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;">
+
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr><tr>
+                            <td>
+                                <table  cellspacing="0" cellpadding="0" width="98%" align="left" border="0" >
+                                    <tr height="30">
+                                        <td bgcolor="#f5fcfe" style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;">
+                                            <span id="DataGridC_labCDataTitle_3"><a title='标记此题'  href='#C3' onclick=javascript:SetTipRubricID('labRubricListCID','4')><img src='../image/MenuICO/Menu36.gif' border=0></a>4、卷烟回购企业将联营企业加工卷烟回购后再销售的，其销售收入不能与自产卷烟分开核算的，则一并计入自产卷烟销售收入征收消费税。（&nbsp;&nbsp;&nbsp; ）<a name='C3'></a></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;"><br />
+                                            <span id="DataGridC_RBLCData_3" onclick="javascript:WriteRBL(&#39;labRubricListCID&#39;,&#39;4&#39;)"><input id="DataGridC_RBLCData_3_0_3" type="radio" name="DataGridC$ctl05$RBLCData" value="Y" /><label for="DataGridC_RBLCData_3_0_3">正确</label><input id="DataGridC_RBLCData_3_1_3" type="radio" name="DataGridC$ctl05$RBLCData" value="N" /><label for="DataGridC_RBLCData_3_1_3">错误</label></span><br /><br />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;">
+
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr><tr>
+                            <td>
+                                <table  cellspacing="0" cellpadding="0" width="98%" align="left" border="0" >
+                                    <tr height="30">
+                                        <td bgcolor="#f5fcfe" style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;">
+                                            <span id="DataGridC_labCDataTitle_4"><a title='标记此题'  href='#C4' onclick=javascript:SetTipRubricID('labRubricListCID','5')><img src='../image/MenuICO/Menu36.gif' border=0></a>5、在我国注册的外商投资企业是非居民企业.（&nbsp; ）<a name='C4'></a></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;"><br />
+                                            <span id="DataGridC_RBLCData_4" onclick="javascript:WriteRBL(&#39;labRubricListCID&#39;,&#39;5&#39;)"><input id="DataGridC_RBLCData_4_0_4" type="radio" name="DataGridC$ctl06$RBLCData" value="Y" /><label for="DataGridC_RBLCData_4_0_4">正确</label><input id="DataGridC_RBLCData_4_1_4" type="radio" name="DataGridC$ctl06$RBLCData" value="N" /><label for="DataGridC_RBLCData_4_1_4">错误</label></span><br /><br />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;">
+
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr><tr>
+                            <td>
+                                <table  cellspacing="0" cellpadding="0" width="98%" align="left" border="0" >
+                                    <tr height="30">
+                                        <td bgcolor="#f5fcfe" style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;">
+                                            <span id="DataGridC_labCDataTitle_5"><a title='标记此题'  href='#C5' onclick=javascript:SetTipRubricID('labRubricListCID','6')><img src='../image/MenuICO/Menu36.gif' border=0></a>6、根据企业所得税法的规定，企业以非货币形式接受捐赠收入的，不记入企业的收入总额。（&nbsp; ）<a name='C5'></a></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;"><br />
+                                            <span id="DataGridC_RBLCData_5" onclick="javascript:WriteRBL(&#39;labRubricListCID&#39;,&#39;6&#39;)"><input id="DataGridC_RBLCData_5_0_5" type="radio" name="DataGridC$ctl07$RBLCData" value="Y" /><label for="DataGridC_RBLCData_5_0_5">正确</label><input id="DataGridC_RBLCData_5_1_5" type="radio" name="DataGridC$ctl07$RBLCData" value="N" /><label for="DataGridC_RBLCData_5_1_5">错误</label></span><br /><br />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;">
+
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr><tr>
+                            <td>
+                                <table  cellspacing="0" cellpadding="0" width="98%" align="left" border="0" >
+                                    <tr height="30">
+                                        <td bgcolor="#f5fcfe" style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;">
+                                            <span id="DataGridC_labCDataTitle_6"><a title='标记此题'  href='#C6' onclick=javascript:SetTipRubricID('labRubricListCID','7')><img src='../image/MenuICO/Menu36.gif' border=0></a>7、税法规定以分期收款方式销售货物的，按照实际收到款项的日期确认收入的实现。（　）<a name='C6'></a></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;"><br />
+                                            <span id="DataGridC_RBLCData_6" onclick="javascript:WriteRBL(&#39;labRubricListCID&#39;,&#39;7&#39;)"><input id="DataGridC_RBLCData_6_0_6" type="radio" name="DataGridC$ctl08$RBLCData" value="Y" /><label for="DataGridC_RBLCData_6_0_6">正确</label><input id="DataGridC_RBLCData_6_1_6" type="radio" name="DataGridC$ctl08$RBLCData" value="N" /><label for="DataGridC_RBLCData_6_1_6">错误</label></span><br /><br />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;">
+
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr><tr>
+                            <td>
+                                <table  cellspacing="0" cellpadding="0" width="98%" align="left" border="0" >
+                                    <tr height="30">
+                                        <td bgcolor="#f5fcfe" style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;">
+                                            <span id="DataGridC_labCDataTitle_7"><a title='标记此题'  href='#C7' onclick=javascript:SetTipRubricID('labRubricListCID','8')><img src='../image/MenuICO/Menu36.gif' border=0></a>8、企业将资产用于生产、制造、加工另一产品，应按视同销售确认收入（&nbsp;&nbsp; ）<a name='C7'></a></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;"><br />
+                                            <span id="DataGridC_RBLCData_7" onclick="javascript:WriteRBL(&#39;labRubricListCID&#39;,&#39;8&#39;)"><input id="DataGridC_RBLCData_7_0_7" type="radio" name="DataGridC$ctl09$RBLCData" value="Y" /><label for="DataGridC_RBLCData_7_0_7">正确</label><input id="DataGridC_RBLCData_7_1_7" type="radio" name="DataGridC$ctl09$RBLCData" value="N" /><label for="DataGridC_RBLCData_7_1_7">错误</label></span><br /><br />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;">
+
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr><tr>
+                            <td>
+                                <table  cellspacing="0" cellpadding="0" width="98%" align="left" border="0" >
+                                    <tr height="30">
+                                        <td bgcolor="#f5fcfe" style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;">
+                                            <span id="DataGridC_labCDataTitle_8"><a title='标记此题'  href='#C8' onclick=javascript:SetTipRubricID('labRubricListCID','9')><img src='../image/MenuICO/Menu36.gif' border=0></a>9、在计算应纳税所得额时，违反税法规定被处的罚款不得扣除，但税收滞纳金可以扣除。（&nbsp;&nbsp; ）<a name='C8'></a></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;"><br />
+                                            <span id="DataGridC_RBLCData_8" onclick="javascript:WriteRBL(&#39;labRubricListCID&#39;,&#39;9&#39;)"><input id="DataGridC_RBLCData_8_0_8" type="radio" name="DataGridC$ctl10$RBLCData" value="Y" /><label for="DataGridC_RBLCData_8_0_8">正确</label><input id="DataGridC_RBLCData_8_1_8" type="radio" name="DataGridC$ctl10$RBLCData" value="N" /><label for="DataGridC_RBLCData_8_1_8">错误</label></span><br /><br />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;">
+
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr><tr>
+                            <td>
+                                <table  cellspacing="0" cellpadding="0" width="98%" align="left" border="0" >
+                                    <tr height="30">
+                                        <td bgcolor="#f5fcfe" style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;">
+                                            <span id="DataGridC_labCDataTitle_9"><a title='标记此题'  href='#C9' onclick=javascript:SetTipRubricID('labRubricListCID','10')><img src='../image/MenuICO/Menu36.gif' border=0></a>10、某纳税人向非金融机构借款1000万元，全年支付利息180万元，金融机构同类、同期贷款利率为13%，则企业应允许税前扣除利息支出180万元。（&nbsp;&nbsp; ）<a name='C9'></a></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;"><br />
+                                            <span id="DataGridC_RBLCData_9" onclick="javascript:WriteRBL(&#39;labRubricListCID&#39;,&#39;10&#39;)"><input id="DataGridC_RBLCData_9_0_9" type="radio" name="DataGridC$ctl11$RBLCData" value="Y" /><label for="DataGridC_RBLCData_9_0_9">正确</label><input id="DataGridC_RBLCData_9_1_9" type="radio" name="DataGridC$ctl11$RBLCData" value="N" /><label for="DataGridC_RBLCData_9_1_9">错误</label></span><br /><br />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;">
+
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        </table>
+                    </div>
+
+
+
+
+
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border-bottom:0px solid #cccccc;border-right: 0px solid #cccccc;">
+                        <input name="StartTime" type="hidden" id="StartTime" value="10:28:23" />
+                        <input name="EndTime" type="hidden" id="EndTime" value="11:28:23" />
+                        <input name="SumTime" type="hidden" id="SumTime" value="60" />
+                        <input name="RndSaveTime" type="hidden" id="RndSaveTime" value="10" />
+                        <input name="txtHideComm" type="hidden" id="txtHideComm" size="1" value="0" />
+                        <input name="txtHideFocus" type="hidden" id="txtHideFocus" size="1" value="0" />
+                        <input name="txtHideEnter" type="hidden" id="txtHideEnter" size="1" value="0" />
+                        <input name="txtCheckID" type="hidden" id="txtCheckID" size="1" value="-1" />
+                        <input name="txtARubricListID" type="hidden" id="txtARubricListID" size="1" />
+                        <input name="txtBRubricListID" type="hidden" id="txtBRubricListID" size="1" />
+                        <input name="txtCRubricListID" type="hidden" id="txtCRubricListID" size="1" />
+                        <input name="txtDRubricListID" type="hidden" id="txtDRubricListID" size="1" />
+                        <input name="txtERubricListID" type="hidden" id="txtERubricListID" size="1" />
+                        <input name="txtFRubricListID" type="hidden" id="txtFRubricListID" size="1" />
+                        <input name="txtGRubricListID" type="hidden" id="txtGRubricListID" size="1" />
+                        <input name="txtHRubricListID" type="hidden" id="txtHRubricListID" size="1" />
+                        <input name="txtIRubricListID" type="hidden" id="txtIRubricListID" size="1" />
+                        <input name="txtJRubricListID" type="hidden" id="txtJRubricListID" size="1" />
+                    </td>
+                </tr>
+
+            </table>
+            <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /><br /><br /><br /> <br /><br /><br /><br /><input type="submit" name="butSave" value="" id="butSave" style="color:White;width:0px;" />
+        </div>
+        <div id="footer"  class="TipTable">
+            <table id="table1" borderColor="#cccccc" cellSpacing="0" borderColorDark="#ffffff" cellPadding="0"
+                   width="100%" align="center" border="0"  class="TipTable">
+                <tr>
+                    <td  valign="top"  background="../image/ExamBottom.jpg" style="FONT-FAMILY: Arial; FONT-SIZE: 13px; LINE-HEIGHT: 13pt">
+                        <font color="red">&nbsp;&nbsp;单击试题前<img src="../image/MenuICO/Menu36.gif" border="0">标记此题,&nbsp;&nbsp;再单击即取消标记此题.</font>&nbsp;&nbsp; &nbsp;&nbsp;未答:<font color="blue">蓝色</font> &nbsp;&nbsp;&nbsp;&nbsp;已答:<font color="green">绿色</font> &nbsp;&nbsp;&nbsp;&nbsp;标记:<font color="red">红色</font>&nbsp;&nbsp;<font color="red"><b><span id="labCheckRubricInfo"></span></b></font><br />
+
+
+
+                        <span id="labRubricListAID"><br><B><a href='#RubricTypeA'>单选题</a>:</B> <a href='#A0'><font color=blue>1、</font></a><a href='#A1'><font color=blue>2、</font></a><a href='#A2'><font color=blue>3、</font></a><a href='#A3'><font color=blue>4、</font></a><a href='#A4'><font color=blue>5、</font></a><a href='#A5'><font color=blue>6、</font></a><a href='#A6'><font color=blue>7、</font></a><a href='#A7'><font color=blue>8、</font></a><a href='#A8'><font color=blue>9、</font></a><a href='#A9'><font color=blue>10、</font></a></span><span id="labRubricListBID"><br><B><a href='#RubricTypeB'>多选题</a>:</B> <a href='#B0'><font color=blue>1、</font></a><a href='#B1'><font color=blue>2、</font></a><a href='#B2'><font color=blue>3、</font></a><a href='#B3'><font color=blue>4、</font></a><a href='#B4'><font color=blue>5、</font></a><a href='#B5'><font color=blue>6、</font></a><a href='#B6'><font color=blue>7、</font></a><a href='#B7'><font color=blue>8、</font></a><a href='#B8'><font color=blue>9、</font></a><a href='#B9'><font color=blue>10、</font></a></span><span id="labRubricListCID"><br><B><a href='#RubricTypeC'>判断题</a>:</B> <a href='#C0'><font color=blue>1、</font></a><a href='#C1'><font color=blue>2、</font></a><a href='#C2'><font color=blue>3、</font></a><a href='#C3'><font color=blue>4、</font></a><a href='#C4'><font color=blue>5、</font></a><a href='#C5'><font color=blue>6、</font></a><a href='#C6'><font color=blue>7、</font></a><a href='#C7'><font color=blue>8、</font></a><a href='#C8'><font color=blue>9、</font></a><a href='#C9'><font color=blue>10、</font></a></span><span id="labRubricListDID"></span><span id="labRubricListEID"></span><span id="labRubricListFID"></span><span id="labRubricListGID"></span><span id="labRubricListHID"></span><span id="labRubricListIID"></span><span id="labRubricListJID"></span><br />
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+
+
+
+    </div>
+
+
+    <script type="text/javascript">
+        //<![CDATA[
+        alert('退出考场时请单击[交卷]按钮，否则以零分计算！');//]]>
+    </script>
+</form>
+<script type="text/javascript" language="javascript">
+
+    document.all.mystarttime.value = document.getElementById("StartTime").value;
+    document.all.myendtime.value = document.getElementById("EndTime").value;
+    var myh = 0;
+    var mym = document.getElementById("SumTime").value - 1;
+
+    if (mym < 0) {
+        //alert("考试时间到，单击确定查看成绩！");
+        document.getElementById("txtHideComm").value = "EndExam";
+        Form1.submit();
+    }
+    var mys = 60;
+
+    function lefttime() {
+        document.all.mystarttime.value = document.getElementById("StartTime").value;
+        document.all.myendtime.value = document.getElementById("EndTime").value;
+        mys--;
+        if (mys < 0) {
+            mys = 59;
+            mym--;
+        }
+        if (mym == 0 && mys == 59) {
+            document.getElementById("txtHideComm").value = "CheckExam";
+            //alert("时间只剩1分钟,系统将马上自动交卷！");
+            document.getElementById("txtHideComm").value = "CheckExam";
+        }
+        if (mym < 0) {
+            mym = 59;
+            myh--;
+            if (myh < 0) {
+                //alert("考试时间到，单击确定查看成绩！");
+                document.getElementById("txtHideComm").value = "EndExam";
+                Form1.submit();
+            }
+        }
+        document.all.lefttime.value = mym + ":" + mys;
+        Form1.SumTime.value = mym;
+        setTimeout("lefttime(myh)", 1000);
+    }
+    lefttime();
+
+    var RndM = document.getElementById("RndSaveTime").value;
+    function SubSaveTime() {
+        RndM = RndM - 1;
+        if (RndM <= 0) {
+            document.getElementById("txtARubricListID").value = document.getElementById("labRubricListAID").innerHTML;
+            document.getElementById("txtBRubricListID").value = document.getElementById("labRubricListBID").innerHTML;
+            document.getElementById("txtCRubricListID").value = document.getElementById("labRubricListCID").innerHTML;
+            document.getElementById("txtDRubricListID").value = document.getElementById("labRubricListDID").innerHTML;
+            document.getElementById("txtERubricListID").value = document.getElementById("labRubricListEID").innerHTML;
+            document.getElementById("txtFRubricListID").value = document.getElementById("labRubricListFID").innerHTML;
+            document.getElementById("txtGRubricListID").value = document.getElementById("labRubricListGID").innerHTML;
+            document.getElementById("txtHRubricListID").value = document.getElementById("labRubricListHID").innerHTML;
+            document.getElementById("txtIRubricListID").value = document.getElementById("labRubricListIID").innerHTML;
+            document.getElementById("txtJRubricListID").value = document.getElementById("labRubricListJID").innerHTML;
+            document.getElementById("txtHideComm").value = "AutoSaveExam";
+            document.getElementById("butSave").click();
+            RndM = document.getElementById("RndSaveTime").value;
+            window.setTimeout("SubSaveTime()", 60000);
+        }
+        else {
+            window.setTimeout("SubSaveTime()", 60000);
+        }
+    }
+    SubSaveTime();
+    function submitit() {
+        document.getElementById("txtHideFocus").value = "0";
+        if (document.getElementById("txtHideEnter").value == "3") {
+            document.getElementById("txtHideEnter").value = "4";
+        }
+        if (document.getElementById("txtHideEnter").value == "2") {
+            document.getElementById("txtHideEnter").value = "3";
+        }
+        if (document.getElementById("txtHideEnter").value == "1") {
+            document.getElementById("txtHideEnter").value = "2";
+        }
+        if (document.getElementById("txtHideEnter").value == "0") {
+            document.getElementById("txtHideEnter").value = "1";
+        }
+        intEnter = document.getElementById("txtHideEnter").value;
+        if (intEnter > 3) {
+            document.getElementById("txtHideComm").value = "EndExam";
+            Form1.submit();
+        }
+
+        if (confirm("未到交卷时间，您确定要提前交卷么？(请注意,提交咨询最多三次)")) {
+            document.getElementById("txtHideComm").value = "EndExam";
+            Form1.submit();
+        }
+        else {
+            return false;
+        }
+    }
+    function CheckExamPaper() {
+        document.getElementById("txtARubricListID").value = document.getElementById("labRubricListAID").innerHTML;
+        document.getElementById("txtBRubricListID").value = document.getElementById("labRubricListBID").innerHTML;
+        document.getElementById("txtCRubricListID").value = document.getElementById("labRubricListCID").innerHTML;
+        document.getElementById("txtDRubricListID").value = document.getElementById("labRubricListDID").innerHTML;
+        document.getElementById("txtERubricListID").value = document.getElementById("labRubricListEID").innerHTML;
+        document.getElementById("txtFRubricListID").value = document.getElementById("labRubricListFID").innerHTML;
+        document.getElementById("txtGRubricListID").value = document.getElementById("labRubricListGID").innerHTML;
+        document.getElementById("txtHRubricListID").value = document.getElementById("labRubricListHID").innerHTML;
+        document.getElementById("txtIRubricListID").value = document.getElementById("labRubricListIID").innerHTML;
+        document.getElementById("txtJRubricListID").value = document.getElementById("labRubricListJID").innerHTML;
+        document.getElementById("txtHideComm").value = "CheckExam";
+        document.getElementById("butSave").click();
+        //Form1.submit();
+    }
+    function SaveExamPaper() {
+        document.getElementById("txtARubricListID").value = document.getElementById("labRubricListAID").innerHTML;
+        document.getElementById("txtBRubricListID").value = document.getElementById("labRubricListBID").innerHTML;
+        document.getElementById("txtCRubricListID").value = document.getElementById("labRubricListCID").innerHTML;
+        document.getElementById("txtDRubricListID").value = document.getElementById("labRubricListDID").innerHTML;
+        document.getElementById("txtERubricListID").value = document.getElementById("labRubricListEID").innerHTML;
+        document.getElementById("txtFRubricListID").value = document.getElementById("labRubricListFID").innerHTML;
+        document.getElementById("txtGRubricListID").value = document.getElementById("labRubricListGID").innerHTML;
+        document.getElementById("txtHRubricListID").value = document.getElementById("labRubricListHID").innerHTML;
+        document.getElementById("txtIRubricListID").value = document.getElementById("labRubricListIID").innerHTML;
+        document.getElementById("txtJRubricListID").value = document.getElementById("labRubricListJID").innerHTML;
+        document.getElementById("txtHideComm").value = "SaveExam";
+        document.getElementById("butSave").click();
+    }
+    function WriteText(txtWrite, strRubricType, strRubricID) {
+        if (document.getElementById(txtWrite).value != "") {
+            document.getElementById(strRubricType).innerHTML = document.getElementById(strRubricType).innerHTML.replace('<font color="red">' + strRubricID + '、</font>', strRubricID + '、').replace('<FONT color=red>' + strRubricID + '、</FONT>', strRubricID + '、').replace('<font color=red>' + strRubricID + '、</font>', strRubricID + '、');
+            document.getElementById(strRubricType).innerHTML = document.getElementById(strRubricType).innerHTML.replace('<font color="blue">' + strRubricID + '、</font>', strRubricID + '、').replace('<FONT color=blue>' + strRubricID + '、</FONT>', strRubricID + '、').replace('<font color=blue>' + strRubricID + '、</font>', strRubricID + '、');
+            if ((document.getElementById(strRubricType).innerHTML.indexOf('<font color="green">' + strRubricID + '、</font>') == -1) && (document.getElementById(strRubricType).innerHTML.indexOf('<FONT color=green>' + strRubricID + '、</FONT>') == -1) && (document.getElementById(strRubricType).innerHTML.indexOf('<font color=green>' + strRubricID + '、</font>') == -1)) {
+                document.getElementById(strRubricType).innerHTML = document.getElementById(strRubricType).innerHTML.replace(strRubricID + '、', '<font color=green>' + strRubricID + '、</font>');
+            }
+        }
+        else {
+            if ((document.getElementById(strRubricType).innerHTML.indexOf('<font color="green">' + strRubricID + '、</font>') != -1) || (document.getElementById(strRubricType).innerHTML.indexOf('<FONT color=green>' + strRubricID + '、</FONT>') != -1) || (document.getElementById(strRubricType).innerHTML.indexOf('<font color=green>' + strRubricID + '、</font>') != -1)) {
+                document.getElementById(strRubricType).innerHTML = document.getElementById(strRubricType).innerHTML.replace('<FONT color=green>' + strRubricID + '、</FONT>', '<FONT color=blue>' + strRubricID + '、</FONT>').replace('<font color="green">' + strRubricID + '、</font>', '<font color="blue">' + strRubricID + '、</font>');
+            }
+        }
+    }
+    function WriteRBL(strRubricType, strRubricID) {
+        document.getElementById(strRubricType).innerHTML = document.getElementById(strRubricType).innerHTML.replace('<font color="red">' + strRubricID + '、</font>', strRubricID + '、').replace('<FONT color=red>' + strRubricID + '、</FONT>', strRubricID + '、').replace('<font color=red>' + strRubricID + '、</font>', strRubricID + '、');
+        document.getElementById(strRubricType).innerHTML = document.getElementById(strRubricType).innerHTML.replace('<font color="blue">' + strRubricID + '、</font>', strRubricID + '、').replace('<FONT color=blue>' + strRubricID + '、</FONT>', strRubricID + '、').replace('<font color=blue>' + strRubricID + '、</font>', strRubricID + '、');
+        if ((document.getElementById(strRubricType).innerHTML.indexOf('<font color="green">' + strRubricID + '、</font>') == -1) && (document.getElementById(strRubricType).innerHTML.indexOf('<FONT color=green>' + strRubricID + '、</FONT>') == -1) && (document.getElementById(strRubricType).innerHTML.indexOf('<font color=green>' + strRubricID + '、</font>') == -1)) {
+            document.getElementById(strRubricType).innerHTML = document.getElementById(strRubricType).innerHTML.replace(strRubricID + '、', '<font color=green>' + strRubricID + '、</font>');
+        }
+    }
+    function SetTipRubricID(strRubricType, strRubricID) {
+        document.getElementById(strRubricType).innerHTML = document.getElementById(strRubricType).innerHTML.replace('<font color="green">' + strRubricID + '、</font>', strRubricID + '、').replace('<FONT color=green>' + strRubricID + '、</FONT>', strRubricID + '、').replace('<font color=green>' + strRubricID + '、</font>', strRubricID + '、');
+        document.getElementById(strRubricType).innerHTML = document.getElementById(strRubricType).innerHTML.replace('<font color="blue">' + strRubricID + '、</font>', strRubricID + '、').replace('<FONT color=blue>' + strRubricID + '、</FONT>', strRubricID + '、').replace('<font color=blue>' + strRubricID + '、</font>', strRubricID + '、');
+        if ((document.getElementById(strRubricType).innerHTML.indexOf('<font color="red">' + strRubricID + '、</font>') == -1) && (document.getElementById(strRubricType).innerHTML.indexOf('<FONT color=red>' + strRubricID + '、</FONT>') == -1) && (document.getElementById(strRubricType).innerHTML.indexOf('<font color=red>' + strRubricID + '、</font>') == -1)) {
+            document.getElementById(strRubricType).innerHTML = document.getElementById(strRubricType).innerHTML.replace(strRubricID + '、', '<font color=red>' + strRubricID + '、</font>');
+        }
+        else {
+            document.getElementById(strRubricType).innerHTML = document.getElementById(strRubricType).innerHTML.replace('<font color="red">' + strRubricID + '、</font>', '<font color=blue>' + strRubricID + '、</font>').replace('<FONT color=red>' + strRubricID + '、</FONT>', '<font color=blue>' + strRubricID + '、</font>').replace('<font color=red>' + strRubricID + '、</font>', '<font color=blue>' + strRubricID + '、</font>');
+
+        }
+    }
+</script>
+
+</body>
+</html>
